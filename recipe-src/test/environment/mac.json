@@ -1,0 +1,28 @@
+{
+    "GetRecipeFunction": {
+        "ENDPOINT_OVERRIDE": "http://docker.for.mac.localhost:8000",
+        "TABLE_NAME": "RecipeTable"
+    },
+    "GetAllRecipeFunction": {
+        "ENDPOINT_OVERRIDE": "http://docker.for.mac.localhost:8000",
+        "TABLE_NAME": "RecipeTable"
+    },
+    "CompleteRecipeFunction": {
+        "ENDPOINT_OVERRIDE": "http://docker.for.mac.localhost:8000",
+        "TABLE_NAME": "RecipeTable"
+    },
+    "AddRecipeFunction": {
+        "ENDPOINT_OVERRIDE": "http://docker.for.mac.localhost:8000",
+        "TABLE_NAME": "RecipeTable"
+    },
+    "UpdateRecipeFunction": {
+        "ENDPOINT_OVERRIDE": "http://docker.for.mac.localhost:8000",
+        "TABLE_NAME": "RecipeTable"
+    },
+    "DeleteRecipeFunction": {
+        "ENDPOINT_OVERRIDE": "http://docker.for.mac.localhost:8000",
+        "TABLE_NAME": "RecipeTable"
+    }
+
+    
+}
