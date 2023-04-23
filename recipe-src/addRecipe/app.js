@@ -30,6 +30,7 @@ const response = (statusCode, body, additionalHeaders) => ({
 });
 
 function isValidRequest(event) {
+  console.log("event in isValidRequest add recipe: " + event)
   return event.body !== null;
 }
 
@@ -78,7 +79,7 @@ exports.addRecipeItem = metricScope((metrics) => async (event, context) => {
   metrics.putDimensions({ Service: "addRecipe" });
   metrics.setProperty("RequestId", context.requestId);
 
-  if (!isValidRequest(context, event)) {
+  if (!isValidRequest(event)) {
     metrics.putMetric("Error", 1, Unit.Count);
     return response(400, { message: "Error: Invalid request" });
   }

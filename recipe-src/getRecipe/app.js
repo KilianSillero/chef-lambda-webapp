@@ -62,7 +62,7 @@ exports.getRecipeItem = metricScope((metrics) => async (event, context) => {
   metrics.setNamespace("RecipeApp");
   metrics.putDimensions({ Service: "getRecipe" });
   metrics.setProperty("RequestId", context.requestId);
-  if (!isValidRequest(context, event)) {
+  if (!isValidRequest(event)) {
     metrics.putMetric("Error", 1, Unit.Count);
     return response(400, { message: "Error: Invalid request" });
   }
