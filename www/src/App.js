@@ -189,7 +189,6 @@ function App() {
               >
                 Log In
               </Button>
-              <Button onClick={askChat} color="danger" size="sm" className="float-right recipeButton" title="ask chat"/>
             </Col>
           </Row>
         </header>
