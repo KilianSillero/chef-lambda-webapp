@@ -1,0 +1,15 @@
+{
+  "name": "AskChat",
+  "version": "1.0.0",
+  "description": "Ask to Chat gpt",
+  "main": "src/app.js",
+  "author": "SAM CLI",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.823.0",
+    "aws-xray-sdk-core": "^3.2.0",
+    "aws-embedded-metrics": "^2.0.2",
+    "uuid": "^8.3.2",
+    "openai": "^3.0.0"
+  }
+}

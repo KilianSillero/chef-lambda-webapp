@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Jumbotron, Row, Col, Alert, Button } from 'reactstrap';
 import axios from 'axios';
 import Recipe from './Recipe'
+import CreateRecipeForm from './CreateRecipeForm'
 
 import './App.css';
 import logo from './aws.png';
@@ -10,7 +11,7 @@ import config from './config';
 
 function App() {
   const [alert, setAlert] = useState();
-  const [alertStyle, setAlertStyle] = useState('info');
+  const [alertStyle, setAlertStyle] = ('info');
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertDismissable, setAlertDismissable] = useState(false);
   const [idToken, setIdToken] = useState('');
@@ -71,7 +72,8 @@ function App() {
 
     if (result && result.status === 401) {
       clearCredentials();
-    } else if (result && result.status === 200) {
+    }
+    else if (result && result.status === 200) {
       console.log(result.data.Items);
       setRecipes(result.data.Items);
     }
@@ -99,7 +101,8 @@ function App() {
 
     if (result && result.status === 401) {
       clearCredentials();
-    } else if (result && result.status === 200) {
+    }
+    else if (result && result.status === 200) {
       getAllRecipes();
       newRecipeInput.value = '';
     }
@@ -119,7 +122,8 @@ function App() {
 
     if (result && result.status === 401) {
       clearCredentials();
-    } else if (result && result.status === 200) {
+    }
+    else if (result && result.status === 200) {
       const newRecipes = recipes.filter((item, index) => index !== indexToRemove);
       setRecipes(newRecipes);
     }
@@ -141,33 +145,65 @@ function App() {
     }
   }
 
+  const askChat = async (q) => {
+    
+    const question = {
+      "question": q
+    };
+
+    const result = await axios({
+      method: 'POST',
+      url: `${config.api_base_url}/gpt/`,
+      headers: {
+        Authorization: idToken
+      },
+      data: question
+    });
+
+    if (result && result.status === 401) {
+      clearCredentials();
+    }
+    else if (result && result.status === 200) {
+      console.log(result)
+    }
+  }
+  
+  
   return (
     <div className="App">
       <Container>
         <Alert color={alertStyle} isOpen={alertVisible} toggle={alertDismissable ? onDismiss : null}>
           <p dangerouslySetInnerHTML={{ __html: alert }}></p>
         </Alert>
+        <header>
+          <Row>
+            <Col md="10" className="logo">
+              <h1>Chef AI</h1>
+              <p>Infinitas recetas a tu alcance.</p>
+            </Col>
+            <Col md="2">
+              <Button
+                href={`https://${config.cognito_hosted_domain}/login?response_type=token&client_id=${config.aws_user_pools_web_client_id}&redirect_uri=${config.redirect_url}`}
+                color="primary"
+                className="mt-5 float-center"
+              >
+                Log In
+              </Button>
+              <Button onClick={askChat} color="danger" size="sm" className="float-right recipeButton" title="ask chat"/>
+            </Col>
+          </Row>
+        </header>
         <Jumbotron>
           <Row>
-            <Col md="6" className="logo">
-              <h1>Serverless Recipe</h1>
-              <p>This is a demo that showcases AWS serverless.</p>
-              <p>The application is built using the SAM CLI toolchain, and uses AWS Lambda, Amazon DynamoDB, and Amazon API Gateway for API services and Amazon Cognito for identity.</p>
-
-              <img src={logo} alt="Logo" />
-            </Col>
-            <Col md="6">
+            <Col md="12">
               {idToken.length > 0 ?
                 (
-                  <Recipe updateAlert={updateAlert} recipes={recipes} addRecipe={addRecipe} deleteRecipe={deleteRecipe} completeRecipe={completeRecipe} />
+                  
+                  <CreateRecipeForm askChat={askChat}/>
                 ) : (
-                  <Button
-                    href={`https://${config.cognito_hosted_domain}/login?response_type=token&client_id=${config.aws_user_pools_web_client_id}&redirect_uri=${config.redirect_url}`}
-                    color="primary"
-                    className="mt-5 float-center"
-                  >
-                    Log In
-                  </Button>
+                  <p>
+                    Para usar esta herramienta necesitas loguearte
+                  </p>
                 )
               }
             </Col>

@@ -34,6 +34,9 @@ Parameters:
   CognitoDomainName:
     Type: String
     Default: myrecipeappdemo
+  OpenAIApiKey:
+    Type: String
+    Default: <API_KEY_HERE>
 
   # For Amplify Console frontend hosting
   Repository:
@@ -157,6 +160,30 @@ Resources:
           Properties:
             Path: /item/{id}
             Method: get
+            RestApiId: !Ref RecipeApi
+            Auth:
+              Authorizer: CognitoAuthorizer
+              
+  
+  AskChatFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: recipe-src/askChat
+      Handler: app.askChat
+      Tracing: Active
+      Policies:
+        - CloudWatchPutMetricPolicy: {}
+      Environment:
+        Variables:
+          OPENAI_API_KEY: !Ref OpenAIApiKey
+          AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
+
+      Events:
+        GetItem:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /gpt
+            Method: post
             RestApiId: !Ref RecipeApi
             Auth:
               Authorizer: CognitoAuthorizer
