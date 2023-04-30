@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, ButtonGroup, Form, FormGroup, Input, Label, Row, Col, Jumbotron, Modal , ModalHeader, ModalBody} from 'reactstrap';
 import ShowRecipe from './ShowRecipe'
 
+import './SavedRecipes.css';
 
 function SavedRecipes({ recipes, deleteRecipe, completeRecipe, parseRecipeText }) {
 
@@ -24,7 +25,7 @@ function SavedRecipes({ recipes, deleteRecipe, completeRecipe, parseRecipeText }
 
     return (
         <div className="SavedRecipes">
-      <Modal isOpen={modal} toggle={toggle}>
+      <Modal isOpen={modal} toggle={toggle} fullscreen>
         <ModalHeader toggle={toggle}>Receta</ModalHeader>
         <ModalBody>
            <ShowRecipe recipeText={recipeText} parseRecipeText={parseRecipeText}/>
@@ -57,8 +58,8 @@ function SavedRecipes({ recipes, deleteRecipe, completeRecipe, parseRecipeText }
                     <Button data-index={index} data-item-id={item.id} onClick={(e) => completeRecipe(item.id)} outline={!item.completed} disabled={item.completed} color="success" size="sm" className="float-right recipeButton" title="Complete Recipe">
                       <span className="oi oi-check"></span>
                     </Button>
-                    <Button data-index={index} data-item-id={item.id} onClick={(e) => seeRecipe(item.recipe)} color="success" size="sm" className="float-right recipeButton" title="Ver receta">
-                      <span className="oi oi-check"></span>
+                    <Button data-index={index} data-item-id={item.id} onClick={(e) => seeRecipe(item.recipe)} color="info" size="sm" className="float-right recipeButton" title="Ver receta">
+                      <span className="oi oi-eye"></span>
                     </Button>
                   </Col>
                 </Row>

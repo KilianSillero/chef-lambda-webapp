@@ -2,14 +2,6 @@
   
 }
 
-.recipeButton {
-  margin-right: 2px;
-}
-
 .completed {
   text-decoration: line-through;
-}
-
-.form-group {
-  margin-bottom: 0 !important;
 }

@@ -16,18 +16,29 @@ function Recipe({ recipeText, addRecipe, parseRecipeText }) {
   return (
     <div className="Recipe">
       
-      <Jumbotron>
+      
           <ShowRecipe recipeText={recipeText} parseRecipeText={parseRecipeText}/>
           
           <h2>Si te ha gustado la receta guardala!</h2>
-          <Form inline>
-            <FormGroup xs="8">
-              <Label for="newRecipe" hidden>Recipe</Label>
-              <Input type="text" name="recipe" id="newRecipe" value={recipeName} placeholder="nombre" />
-            </FormGroup>
-            <Button onClick={(e) => addRecipe(recipeText)} color="primary" className="ml-1">Guardar</Button>
-          </Form>
-      </Jumbotron>
+          <Form className="d-flex" inline>
+            <FormGroup className="flex-fill">
+            <Input
+              type="text"
+              name="recipe"
+              id="newRecipe"
+              value={recipeName}
+              placeholder="nombre de la receta"
+              className="w-100"
+            />
+          </FormGroup>
+          <Button
+            onClick={(e) => addRecipe(recipeText)}
+            color="primary"
+            className="ml-1"
+          >
+            Guardar
+          </Button>
+        </Form>
     </div >
   );
 }

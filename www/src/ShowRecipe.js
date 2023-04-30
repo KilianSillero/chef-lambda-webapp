@@ -9,7 +9,6 @@ function ShowRecipe({ recipeText, parseRecipeText }) {
   return (
     <div className="Recipe">
       
-      <h1>Te sugiero que hagas:</h1>
       <h2>{recipeName}</h2>
       <h3>Ingredientes:</h3>
       <ul>
