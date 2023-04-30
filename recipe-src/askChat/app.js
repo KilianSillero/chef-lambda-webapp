@@ -71,7 +71,7 @@ exports.askChat = metricScope((metrics) => async (event, context) => {
     });
 
     metrics.putMetric("Success", 1, Unit.Count);
-    return response(200, { body: JSON.stringify({ "Answer": completion.data.choices[0].message }) });
+    return response(200, { body:  completion.data.choices[0].message.content });
   }
   catch (err) {
     metrics.putMetric("Error", 1, Unit.Count);

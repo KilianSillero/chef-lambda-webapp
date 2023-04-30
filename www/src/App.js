@@ -147,6 +147,12 @@ function App() {
 
   const askChat = async (q) => {
     
+    // //PRRUEBA
+    // const textPrueba = "recipeName: Fajitas de pollo y verduras con yogurt\n\ningredients: \n- 1 pechuga de pollo\n- 1 paquete de fajitas de trigo\n- 1 taza de verduras mixtas (cebolla, tomate, pimiento)\n- 1/2 taza de yogur natural\n- Sal y pimienta al gusto\n- 1 diente de ajo picado\n- 1 pimiento rojo en tiras\n- 2 huevos\n\ntools: Sartén\n\ntime: 15 minutos\n\ndifficulty: Fácil\n\nInstrucciones:\n\n1. Cortar el pollo en tiras finas y sazonarlo con sal y pimienta. Reservar.\n2. Calentar la sartén a fuego medio y agregar las fajitas de trigo para que se calienten por ambos lados. Retirar de la sartén y reservar.\n3. En la misma sartén, agregar las tiras de pollo y cocinar por 5 minutos o hasta que estén doradas.\n4. Agregar las verduras picadas y el pimiento rojo en tiras y saltear durante 3-5 minutos.\n5. Batir los huevos en un recipiente aparte y agregarlos a la sartén con el pollo y las verduras. Revolver hasta que estén cocidos.\n6. Rellenar las fajitas calientes con la mezcla de pollo y verduras.\n7. Servir con una cucharada de yogur natural encima de las fajitas rellenas."
+
+    // setRecipeText(textPrueba)
+    // return
+    
     const question = {
       "question": q
     };
@@ -165,7 +171,8 @@ function App() {
     }
     else if (result && result.status === 200) {
       console.log(result)
-      setRecipeText(result.data.answer);
+      const recipe = JSON.stringify(result.data)
+      setRecipeText(recipe);
     }
   }
   
