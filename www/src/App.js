@@ -147,11 +147,11 @@ function App() {
 
   const askChat = async (q) => {
     
-    // //PRRUEBA
-    // const textPrueba = "recipeName: Fajitas de pollo y verduras con yogurt\n\ningredients: \n- 1 pechuga de pollo\n- 1 paquete de fajitas de trigo\n- 1 taza de verduras mixtas (cebolla, tomate, pimiento)\n- 1/2 taza de yogur natural\n- Sal y pimienta al gusto\n- 1 diente de ajo picado\n- 1 pimiento rojo en tiras\n- 2 huevos\n\ntools: Sartén\n\ntime: 15 minutos\n\ndifficulty: Fácil\n\nInstrucciones:\n\n1. Cortar el pollo en tiras finas y sazonarlo con sal y pimienta. Reservar.\n2. Calentar la sartén a fuego medio y agregar las fajitas de trigo para que se calienten por ambos lados. Retirar de la sartén y reservar.\n3. En la misma sartén, agregar las tiras de pollo y cocinar por 5 minutos o hasta que estén doradas.\n4. Agregar las verduras picadas y el pimiento rojo en tiras y saltear durante 3-5 minutos.\n5. Batir los huevos en un recipiente aparte y agregarlos a la sartén con el pollo y las verduras. Revolver hasta que estén cocidos.\n6. Rellenar las fajitas calientes con la mezcla de pollo y verduras.\n7. Servir con una cucharada de yogur natural encima de las fajitas rellenas."
+    //PRRUEBA
+    const textPrueba = "recipeName: Fajitas de Pollo con Verduras y Yogur ingredients: pollo; fajitas; verduras (pueden ser pimiento, cebolla, tomate, etc.); yogur; sal; pimienta; ajo; pimenton; huevos (opcional) tools: sarten time: 15 minutos difficulty: fácil instructions: 1. Cortar el pollo y las verduras en tiras delgadas. 2. Sazonar el pollo con un poco de pimienta, ajo y pimentón. 3. Calentar la sartén a fuego medio y agregar una cucharada de aceite. 4. Agregar el pollo y saltear hasta que esté dorado, alrededor de 3 minutos. 5. Agregar las verduras y saltear a fuego medio-alto durante 5 minutos más, hasta que estén tiernas. 6. Calentar las fajitas en la sartén o en el microondas. 7. Agregar una cucharada grande de yogur en cada fajita y cubrir con la mezcla de pollo y verduras. 8. Para una opción adicional, puedes batir un huevo y agregarlo a la sartén después de las verduras para cocinarlo junto con la mezcla. 9. Servir de inmediato y disfrutar!"
 
-    // setRecipeText(textPrueba)
-    // return
+    setRecipeText(textPrueba)
+    return
     
     const question = {
       "question": q

@@ -13,7 +13,7 @@ function Recipe({ recipeText, recipes, addRecipe, deleteRecipe, completeRecipe }
     const recipeName = lines.find((line) => line.startsWith('recipeName:')).split(':')[1].trim();
   
     // Busca la línea que comienza con "Ingredientes:" y extrae los ingredientes como una lista
-    const ingredients = lines.find((line) => line.startsWith('ingredients:')).split(':')[1].split(',').map((ingredient) => ingredient.trim());
+    const ingredients = lines.find((line) => line.startsWith('ingredients:')).split(':')[1].split(';').map((ingredient) => ingredient.trim());
   
     // Busca la línea que comienza con "Herramientas de cocina:" y extrae las herramientas como una lista
     const tools = lines.find((line) => line.startsWith('tools:')).split(':')[1].split(',').map((tool) => tool.trim());
@@ -24,7 +24,7 @@ function Recipe({ recipeText, recipes, addRecipe, deleteRecipe, completeRecipe }
     // Busca la línea que comienza con "Dificultad de ejecución:" y extrae la dificultad
     const difficulty = lines.find((line) => line.startsWith('difficulty:')).split(':')[1].trim();
     
-    const instructions = lines.find((line) => line.startsWith('instructions:')).split(':')[1].trim();
+    const instructions = lines.find((line) => line.startsWith('instructions:')).nextAll();
   
     // Devuelve un objeto con las variables de la receta
     return {
