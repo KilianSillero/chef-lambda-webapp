@@ -7,8 +7,10 @@ const { createSliderWithTooltip } = Slider;
 const SliderWithTooltip = createSliderWithTooltip(Slider);
 
 const CreateRecipeForm = ({askChat}) => {
+  
+  const [buttonDisable, setButtonDisable] = useState(false);
   const [ingredientes, setIngredientes] = useState('');
-  const [tiempo, setTiempo] = useState(10);
+  const [tiempo, setTiempo] = useState(15);
   const [utensilios, setUtensilios] = useState([]);
   const [dificultades, setDificultad] = useState([]);
 
@@ -42,10 +44,17 @@ const CreateRecipeForm = ({askChat}) => {
     }
   };
   const handleSubmit = () => {
+    if (buttonDisable) {
+        return;
+    }
+    setButtonDisable(true);
+    
     const utensiliosText = utensilios.join(', ');
     const dificultadText = dificultades.join(', ');
     const tiempoText = `${tiempo} minutos`;
-    const texto = `Crea una receta con los siguientes ingredientes: ${ingredientes}. Puedes usar los siguientes utensilios: ${utensiliosText}. La dificultad debe ser ${dificultadText} y tardar en hacerse ${tiempoText}.`;
+//Tarea: Crea una receta de comida siguiendo estrictamente estas reglas: 1- Ingredientes disponibles: Mantequilla, leche. 2- Herramientas de cocina disponibles: horno, microondas, licuadora, freidora de aire, estufa. 3- Tiempo de cocción: Menos de 15 minutos. 4- Dificultad de ejecución: Fácil. 5- Uso de ingredientes: Puedes usar CUALQUIER ingrediente disponible a tu discreción. NO USES NINGÚN INGREDIENTE QUE NO SEA PARA COCINAR. 6- Muestra las unidades utilizando tanto el sistema métrico como el imperial. Responde con key:value donde las keys seran: recipeName, ingredients, tools, time, difficulty, instructions
+    //const texto = `Crea una receta con los siguientes ingredientes: ${ingredientes}. Puedes usar los siguientes utensilios: ${utensiliosText}. La dificultad debe ser ${dificultadText} y tardar en hacerse ${tiempoText}.`;
+    const texto = `Tarea: Crea una receta de comida siguiendo estrictamente estas reglas: 1- Ingredientes disponibles: ${ingredientes}. 2- Herramientas de cocina disponibles: ${utensiliosText}. 3- Tiempo de cocción: ${tiempoText}. 4- Dificultad de ejecución: ${dificultadText}. 5- Uso de ingredientes: Puedes usar CUALQUIER ingrediente disponible a tu discreción. NO USES NINGÚN INGREDIENTE QUE NO SEA PARA COCINAR. Responde con key:value donde las keys seran: recipeName, ingredients, tools, time, difficulty`;
     console.log(texto);
     askChat(texto);
   };
@@ -66,9 +75,9 @@ const CreateRecipeForm = ({askChat}) => {
       <FormGroup>
         <Label for="tiempo">Tiempo</Label>
         <SliderWithTooltip
-          min={0}
+          min={5}
           max={120}
-          step={5}
+          step={10}
           defaultValue={tiempo}
           onAfterChange={handleTiempoChange}
         />
@@ -135,7 +144,7 @@ const CreateRecipeForm = ({askChat}) => {
       />
     </div>
   </FormGroup>
-  <Button onClick={handleSubmit}>Crear receta</Button>
+  <Button onClick={handleSubmit} disabled={buttonDisable}>{buttonDisable ? 'Creando receta...' : 'Crear receta'}</Button>
 </Form>
 );
 };

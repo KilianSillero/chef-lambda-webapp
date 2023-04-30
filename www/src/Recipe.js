@@ -3,8 +3,41 @@ import { Button, ButtonGroup, Form, FormGroup, Input, Label, Row, Col } from 're
 
 import './Recipe.css';
 
-function Recipe({ recipes, addRecipe, deleteRecipe, completeRecipe }) {
+function Recipe({ recipeText, recipes, addRecipe, deleteRecipe, completeRecipe }) {
+  
+  function parseRecipeText(text) {
+    // Divide el texto de la receta por saltos de línea para obtener cada línea por separado
+    const lines = text.split('\n');
+  
+    // Busca la línea que comienza con "Nombre de la receta:" y extrae el nombre de la receta
+    const recipeName = lines.find((line) => line.startsWith('recipeName:')).split(':')[1].trim();
+  
+    // Busca la línea que comienza con "Ingredientes:" y extrae los ingredientes como una lista
+    const ingredients = lines.find((line) => line.startsWith('ingredients:')).split(':')[1].split(',').map((ingredient) => ingredient.trim());
+  
+    // Busca la línea que comienza con "Herramientas de cocina:" y extrae las herramientas como una lista
+    const tools = lines.find((line) => line.startsWith('tools:')).split(':')[1].split(',').map((tool) => tool.trim());
+  
+    // Busca la línea que comienza con "Tiempo de cocción:" y extrae el tiempo de cocción
+    const time = lines.find((line) => line.startsWith('time:')).split(':')[1].trim();
+  
+    // Busca la línea que comienza con "Dificultad de ejecución:" y extrae la dificultad
+    const difficulty = lines.find((line) => line.startsWith('difficulty:')).split(':')[1].trim();
+    
+    const instructions = lines.find((line) => line.startsWith('instructions:')).split(':')[1].trim();
+  
+    // Devuelve un objeto con las variables de la receta
+    return {
+      recipeName,
+      ingredients,
+      tools,
+      time,
+      difficulty,
+    };
+  }
+
   const [filter, setFilter] = useState('all');
+  const { recipeName, ingredients, tools, time, difficulty, instructions } = parseRecipeText(recipeText);
 
   const changeFilter = (newFilter) => {
     setFilter(newFilter);
@@ -12,6 +45,31 @@ function Recipe({ recipes, addRecipe, deleteRecipe, completeRecipe }) {
 
   return (
     <div className="Recipe">
+      
+      <Row>
+        <Col xs="12" className="mt-1 mb-1">
+          <h1>Receta</h1>
+          <h2>{recipeName}</h2>
+          <h3>Ingredientes:</h3>
+          <ul>
+            {ingredients.map((ingredient, i) => (
+              <li key={i}>{ingredient}</li>
+            ))}
+          </ul>
+          <h3>Herramientas de cocina:</h3>
+          <ul>
+            {tools.map((tool, i) => (
+              <li key={i}>{tool}</li>
+            ))}
+          </ul>
+          <h3>Tiempo de cocción:</h3>
+          <p>{time}</p>
+          <h3>Dificultad de ejecución:</h3>
+          <p>{difficulty}</p>
+          <h3>Pasos a seguir:</h3>
+          <p>{instructions}</p>
+        </Col>
+      </Row>
       <Row>
         <Col xs="12" className="mt-1 mb-1">
           <Form inline>

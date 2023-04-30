@@ -36,7 +36,7 @@ const response = (statusCode, body, additionalHeaders) => ({
 });
 
 function isValidRequest(event) {
-  console.log("event in isValidRequest add recipe: " + event)
+  console.log("event in isValidRequest add recipe: " + JSON.stringify(event, null, 2))
   return event.body !== null;
 }
 
@@ -61,19 +61,26 @@ exports.askChat = metricScope((metrics) => async (event, context) => {
   }
 
   try {
-    
-   const completion = await openai.createCompletion({
+    const body = JSON.parse(event.body);
+    console.log("BODY.QUESTION: " + body.question);
+
+    const completion = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
-      prompt: event.question,
-      temperature: 0.9,
-      echo: true,
+      messages: [{role: "user", content: body.question}],
       max_tokens: 2048
     });
 
     metrics.putMetric("Success", 1, Unit.Count);
-    return response(200, {body:JSON.stringify({"Answer": completion.data.choices[0].text })});
-  } catch (err) {
+    return response(200, { body: JSON.stringify({ "Answer": completion.data.choices[0].message }) });
+  }
+  catch (err) {
     metrics.putMetric("Error", 1, Unit.Count);
+    if (err.response) {
+      console.log(err.response.status);
+      console.log(err.response.data);
+    } else {
+      console.log(err.message);
+    }
     return response(400, { message: err.message });
   }
 });

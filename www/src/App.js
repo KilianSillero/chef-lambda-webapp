@@ -5,7 +5,6 @@ import Recipe from './Recipe'
 import CreateRecipeForm from './CreateRecipeForm'
 
 import './App.css';
-import logo from './aws.png';
 
 import config from './config';
 
@@ -16,6 +15,7 @@ function App() {
   const [alertDismissable, setAlertDismissable] = useState(false);
   const [idToken, setIdToken] = useState('');
   const [recipes, setRecipes] = useState([]);
+  const [recipeText, setRecipeText] = useState('');
 
   useEffect(() => {
     getIdToken();
@@ -165,6 +165,7 @@ function App() {
     }
     else if (result && result.status === 200) {
       console.log(result)
+      setRecipeText(result.data.answer);
     }
   }
   
@@ -195,10 +196,12 @@ function App() {
         <Jumbotron>
           <Row>
             <Col md="12">
-              {idToken.length > 0 ?
+              {idToken.length === 0 ?
                 (
-                  
-                  <CreateRecipeForm askChat={askChat}/>
+                  <div>
+                    <CreateRecipeForm askChat={askChat}/>
+                    {recipeText ? <Recipe recipeText = { recipeText } addRecipe = { addRecipe } recipes = { recipes } deleteRecipe = { deleteRecipe } completeRecipe = { completeRecipe }/> : null}
+                  </div>
                 ) : (
                   <p>
                     Para usar esta herramienta necesitas loguearte
