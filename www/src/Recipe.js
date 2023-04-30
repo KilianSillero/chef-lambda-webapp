@@ -16,7 +16,6 @@ function Recipe({ recipeText, addRecipe, parseRecipeText }) {
   return (
     <div className="Recipe">
       
-      
           <ShowRecipe recipeText={recipeText} parseRecipeText={parseRecipeText}/>
           
           <h2>Si te ha gustado la receta guardala!</h2>
@@ -26,7 +25,7 @@ function Recipe({ recipeText, addRecipe, parseRecipeText }) {
               type="text"
               name="recipe"
               id="newRecipe"
-              value={recipeName}
+              defaultValue={recipeName}
               placeholder="nombre de la receta"
               className="w-100"
             />

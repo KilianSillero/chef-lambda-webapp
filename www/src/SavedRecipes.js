@@ -36,15 +36,14 @@ function SavedRecipes({ recipes, deleteRecipe, completeRecipe, parseRecipeText }
       <Row>
         <Col xs="12" className="mt-1 mb-1">
           <ButtonGroup>
-            <Button onClick={(e) => changeFilter('all')} color={(filter === 'all') ? 'primary' : 'secondary'}>All</Button>
-            <Button onClick={(e) => changeFilter('complete')} color={(filter === 'complete') ? 'primary' : 'secondary'}>Complete</Button>
-            <Button onClick={(e) => changeFilter('incomplete')} color={(filter === 'incomplete') ? 'primary' : 'secondary'}>Incomplete</Button>
+            <Button onClick={(e) => changeFilter('all')} color={(filter === 'all') ? 'primary' : 'secondary'}>Todas</Button>
+            <Button onClick={(e) => changeFilter('complete')} color={(filter === 'complete') ? 'primary' : 'secondary'}>Favoritas</Button>
           </ButtonGroup>
         </Col>
         
         <Col xs="12" className="mt-1 mb-1">
           <ul className="list-group">
-            {recipes.filter(item => ((filter === 'all') || (filter === 'complete' && item.completed) || (filter === 'incomplete' && !item.completed))).map((item, index) => (
+            {recipes.filter(item => ((filter === 'all') || (filter === 'complete' && item.completed))).map((item, index) => (
 
               <li className="list-group-item" key={item.id}>
                 <Row>
@@ -55,8 +54,8 @@ function SavedRecipes({ recipes, deleteRecipe, completeRecipe, parseRecipeText }
                     <Button data-index={index} data-item-id={item.id} onClick={(e) => deleteRecipe(index, item.id)} color="danger" size="sm" className="float-right recipeButton" title="Borrar Receta">
                       <span className="oi oi-delete"></span>
                     </Button>
-                    <Button data-index={index} data-item-id={item.id} onClick={(e) => completeRecipe(item.id)} outline={!item.completed} disabled={item.completed} color="success" size="sm" className="float-right recipeButton" title="Complete Recipe">
-                      <span className="oi oi-check"></span>
+                    <Button data-index={index} data-item-id={item.id} onClick={(e) => completeRecipe(item.id)} outline={!item.completed} disabled={item.completed} color="success" size="sm" className="float-right recipeButton" title="Favoritas">
+                      <span className="oi oi-star"></span>
                     </Button>
                     <Button data-index={index} data-item-id={item.id} onClick={(e) => seeRecipe(item.recipe)} color="info" size="sm" className="float-right recipeButton" title="Ver receta">
                       <span className="oi oi-eye"></span>

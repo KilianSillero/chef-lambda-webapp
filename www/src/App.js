@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Container, Jumbotron, Row, Col, Alert, Button } from 'reactstrap';
 import axios from 'axios';
 import Recipe from './Recipe'
@@ -48,7 +49,7 @@ function App() {
   const clearCredentials = () => {
     // Borrar la cookie que contiene el token
     document.cookie = "id_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    
+
     // Redirigir al usuario a la página de inicio de sesión
     window.location.href = config.redirect_url;
   };
@@ -67,13 +68,13 @@ function App() {
         idToken = cookie.substring(name.length, cookie.length);
       }
     });
-    
+
     // Si la cookie existe, devolver el token
     if (idToken) {
       setIdToken(idToken);
       return idToken;
     }
-    
+
     // Si la cookie no existe, obtener el token de la URL
     const hash = window.location.hash.substr(1);
     const objects = hash.split("&");
@@ -88,7 +89,7 @@ function App() {
         setIdToken(idToken);
       }
     });
-    
+
     return idToken;
   };
 
@@ -182,13 +183,13 @@ function App() {
   }
 
   const askChat = async (q) => {
-    
-    //PRRUEBA
-    const textPrueba = "[\n  {\n    \"recipeName\": \"Fajitas de pollo con verduras y yogur\",\n    \"difficulty\": \"Intermedio\",\n    \"preparationTime\": 15,\n    \"ingredients\": [\"pollo\", \"fajitas\", \"verduras\", \"yogur\", \"sal\", \"pimienta\", \"ajo\", \"pimenton\", \"huevos\"],\n    \"kitchenToolsUsed\": [\"sartén\"],\n    \"instructions\": [\n      \"1. Cortar el pollo y las verduras en tiras delgadas.\",\n      \"2. En un sartén caliente, agregar un poco de aceite y dorar el pollo por unos minutos. Agregar las verduras y cocinar por 5 minutos hasta que estén suaves.\",\n      \"3. Agregar sal, pimienta, ajo y pimentón al gusto.\",\n      \"4. Cocinar las fajitas siguiendo las instrucciones del paquete.\",\n      \"5. En un sartén aparte, batir los huevos hasta que estén espumosos. Agregar sal y pimienta al gusto. Cocinar en un sartén caliente hasta que estén firmes.\",\n      \"6. Servir las fajitas con el pollo y las verduras encima, añadir los huevos revueltos y un poco de yogur.\"\n    ]\n  }\n]"
 
-    setRecipeText(textPrueba)
-    return
-    
+    //PRRUEBA
+    // const textPrueba = "[\n  {\n    \"recipeName\": \"Fajitas de pollo con verduras y yogur\",\n    \"difficulty\": \"Intermedio\",\n    \"preparationTime\": 15,\n    \"ingredients\": [\"pollo\", \"fajitas\", \"verduras\", \"yogur\", \"sal\", \"pimienta\", \"ajo\", \"pimenton\", \"huevos\"],\n    \"kitchenToolsUsed\": [\"sartén\"],\n    \"instructions\": [\n      \"1. Cortar el pollo y las verduras en tiras delgadas.\",\n      \"2. En un sartén caliente, agregar un poco de aceite y dorar el pollo por unos minutos. Agregar las verduras y cocinar por 5 minutos hasta que estén suaves.\",\n      \"3. Agregar sal, pimienta, ajo y pimentón al gusto.\",\n      \"4. Cocinar las fajitas siguiendo las instrucciones del paquete.\",\n      \"5. En un sartén aparte, batir los huevos hasta que estén espumosos. Agregar sal y pimienta al gusto. Cocinar en un sartén caliente hasta que estén firmes.\",\n      \"6. Servir las fajitas con el pollo y las verduras encima, añadir los huevos revueltos y un poco de yogur.\"\n    ]\n  }\n]"
+
+    // setRecipeText(textPrueba)
+    // return
+
     const question = {
       "question": q
     };
@@ -211,7 +212,7 @@ function App() {
       setRecipeText(recipe);
     }
   }
-  
+
   function parseRecipeText(text) {
     // Divide el texto de la receta por saltos de línea para obtener cada línea por separado
     const json = JSON.parse(text);
@@ -222,7 +223,7 @@ function App() {
     const time = objReceta.preparationTime;
     const difficulty = objReceta.difficulty;
     const instructions = objReceta.instructions;
-  
+
     // Devuelve un objeto con las variables de la receta
     return {
       recipeName,
@@ -234,49 +235,87 @@ function App() {
     };
   }
   return (
-    <div className="App">
-      <Container>
-        <Alert color={alertStyle} isOpen={alertVisible} toggle={alertDismissable ? onDismiss : null}>
-          <p dangerouslySetInnerHTML={{ __html: alert }}></p>
-        </Alert>
-        <header>
-          <Row>
-            <Col md="10" className="logo">
-              <h1>Chef AI</h1>
-              <p>Infinitas recetas a tu alcance.</p>
-            </Col>
-            <Col md="2">
-              <Button
-                href={`https://${config.cognito_hosted_domain}/login?response_type=token&client_id=${config.aws_user_pools_web_client_id}&redirect_uri=${config.redirect_url}`}
-                color="primary"
-                className="mt-5 float-right"
-              >
-                Log In
-              </Button>
-            </Col>
-          </Row>
-        </header>
-        <Jumbotron>
-          <Row>
-            <Col md="12">
-              {idToken.length > 0 || true ?
-                (
-                  <div>
-                    <SavedRecipes recipes = { recipes } deleteRecipe = { deleteRecipe } completeRecipe = { completeRecipe } parseRecipeText={parseRecipeText}/>
-                    <CreateRecipeForm askChat={askChat}/>
-                    {recipeText ? <Recipe recipeText = { recipeText } addRecipe = { addRecipe } recipes = { recipes } deleteRecipe = { deleteRecipe } completeRecipe = { completeRecipe } parseRecipeText={parseRecipeText} /> : null}
-                  </div>
+    <Router>
+      <div className="App">
+        <Container>
+          <Alert
+            color={alertStyle}
+            isOpen={alertVisible}
+            toggle={alertDismissable ? onDismiss : null}
+          >
+            <p dangerouslySetInnerHTML={{ __html: alert }}></p>
+          </Alert>
+          <header>
+            <Row>
+              <Col md="8" className="logo">
+                <h1>Chef AI</h1>
+                <p>Infinitas recetas a tu alcance.</p>
+              </Col>
+              <Col md="4">
+                <Button
+                  href={`https://${config.cognito_hosted_domain}/login?response_type=token&client_id=${config.aws_user_pools_web_client_id}&redirect_uri=${config.redirect_url}`}
+                  color="info"
+                  className="mt-4 float-right"
+                >
+                  {idToken.length > 0 ? 'Sesion Iniciada' : 'Iniciar Sesión'}
+                </Button>
+                <Button
+                  href="/saved-recipes"
+                  color="primary"
+                  className="mt-4 mr-2 float-right"
+                >
+                  Mis Recetas
+                </Button>
+              </Col>
+            </Row>
+          </header>
+          <Jumbotron>
+            <Row>
+              <Col md="12">
+                {idToken.length > 0 || true ? (
+                  <Switch>
+                    <Route
+                      exact
+                      path="/"
+                      component={() => (
+                        <div>
+                          <CreateRecipeForm askChat={askChat} />
+                          {recipeText ? (
+                            <Recipe
+                              recipeText={recipeText}
+                              addRecipe={addRecipe}
+                              recipes={recipes}
+                              deleteRecipe={deleteRecipe}
+                              completeRecipe={completeRecipe}
+                              parseRecipeText={parseRecipeText}
+                            />
+                          ) : null}
+                        </div>
+                      )}
+                    />
+                    <Route
+                      exact
+                      path="/saved-recipes"
+                      component={() => (
+                        <SavedRecipes
+                          recipes={recipes}
+                          deleteRecipe={deleteRecipe}
+                          completeRecipe={completeRecipe}
+                          parseRecipeText={parseRecipeText}
+                        />
+                      )}
+                    />
+                  </Switch>
                 ) : (
-                  <p>
-                    Para usar esta herramienta necesitas iniciar sesión
-                  </p>
-                )
-              }
-            </Col>
-          </Row>
-        </Jumbotron>
-      </Container>
-    </div >
+                  <p>Para usar esta herramienta necesitas iniciar sesión</p>
+                )}
+              </Col>
+            </Row>
+          </Jumbotron>
+        </Container>
+      </div>
+    </Router>
+
   );
 }
 
