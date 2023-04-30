@@ -148,10 +148,10 @@ function App() {
   const askChat = async (q) => {
     
     //PRRUEBA
-    const textPrueba = "recipeName: Fajitas de Pollo con Verduras y Yogur ingredients: pollo; fajitas; verduras (pueden ser pimiento, cebolla, tomate, etc.); yogur; sal; pimienta; ajo; pimenton; huevos (opcional) tools: sarten time: 15 minutos difficulty: fácil instructions: 1. Cortar el pollo y las verduras en tiras delgadas. 2. Sazonar el pollo con un poco de pimienta, ajo y pimentón. 3. Calentar la sartén a fuego medio y agregar una cucharada de aceite. 4. Agregar el pollo y saltear hasta que esté dorado, alrededor de 3 minutos. 5. Agregar las verduras y saltear a fuego medio-alto durante 5 minutos más, hasta que estén tiernas. 6. Calentar las fajitas en la sartén o en el microondas. 7. Agregar una cucharada grande de yogur en cada fajita y cubrir con la mezcla de pollo y verduras. 8. Para una opción adicional, puedes batir un huevo y agregarlo a la sartén después de las verduras para cocinarlo junto con la mezcla. 9. Servir de inmediato y disfrutar!"
+    // const textPrueba = "recipeName: Fajitas de Pollo con Verduras y Yogur ingredients: pollo; fajitas; verduras (pueden ser pimiento, cebolla, tomate, etc.); yogur; sal; pimienta; ajo; pimenton; huevos (opcional) tools: sarten time: 15 minutos difficulty: fácil instructions: 1. Cortar el pollo y las verduras en tiras delgadas. 2. Sazonar el pollo con un poco de pimienta, ajo y pimentón. 3. Calentar la sartén a fuego medio y agregar una cucharada de aceite. 4. Agregar el pollo y saltear hasta que esté dorado, alrededor de 3 minutos. 5. Agregar las verduras y saltear a fuego medio-alto durante 5 minutos más, hasta que estén tiernas. 6. Calentar las fajitas en la sartén o en el microondas. 7. Agregar una cucharada grande de yogur en cada fajita y cubrir con la mezcla de pollo y verduras. 8. Para una opción adicional, puedes batir un huevo y agregarlo a la sartén después de las verduras para cocinarlo junto con la mezcla. 9. Servir de inmediato y disfrutar!"
 
-    setRecipeText(textPrueba)
-    return
+    // setRecipeText(textPrueba)
+    // return
     
     const question = {
       "question": q
