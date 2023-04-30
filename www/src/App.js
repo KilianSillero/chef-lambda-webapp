@@ -204,7 +204,7 @@ function App() {
                   </div>
                 ) : (
                   <p>
-                    Para usar esta herramienta necesitas loguearte
+                    Para usar esta herramienta necesitas iniciar sesión
                   </p>
                 )
               }
