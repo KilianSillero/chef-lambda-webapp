@@ -46,19 +46,52 @@ function App() {
   }
 
   const clearCredentials = () => {
+    // Borrar la cookie que contiene el token
+    document.cookie = "id_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    
+    // Redirigir al usuario a la página de inicio de sesión
     window.location.href = config.redirect_url;
-  }
+  };
 
   const getIdToken = () => {
+    // Buscar la cookie que contiene el token
+    const name = "id_token" + "=";
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const cookieArray = decodedCookie.split(";");
+    let idToken = null;
+    cookieArray.forEach(cookie => {
+      while (cookie.charAt(0) === " ") {
+        cookie = cookie.substring(1);
+      }
+      if (cookie.indexOf(name) === 0) {
+        idToken = cookie.substring(name.length, cookie.length);
+      }
+    });
+    
+    // Si la cookie existe, devolver el token
+    if (idToken) {
+      setIdToken(idToken);
+      return idToken;
+    }
+    
+    // Si la cookie no existe, obtener el token de la URL
     const hash = window.location.hash.substr(1);
     const objects = hash.split("&");
     objects.forEach(object => {
       const keyVal = object.split("=");
       if (keyVal[0] === "id_token") {
-        setIdToken(keyVal[1]);
+        idToken = keyVal[1];
+        const expires = new Date();
+        // Set the expiration time to one hour from now
+        expires.setTime(expires.getTime() + (60 * 60 * 1000));
+        document.cookie = `id_token=${idToken};expires=${expires.toUTCString()};path=/`;
+        setIdToken(idToken);
       }
     });
+    
+    return idToken;
   };
+
 
   const getAllRecipes = async () => {
     const result = await axios({

@@ -25,7 +25,7 @@ function SavedRecipes({ recipes, deleteRecipe, completeRecipe, parseRecipeText }
 
     return (
         <div className="SavedRecipes">
-      <Modal isOpen={modal} toggle={toggle} fullscreen>
+      <Modal isOpen={modal} toggle={toggle} size="xl">
         <ModalHeader toggle={toggle}>Receta</ModalHeader>
         <ModalBody>
            <ShowRecipe recipeText={recipeText} parseRecipeText={parseRecipeText}/>
