@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Container, Jumbotron, Row, Col, Alert, Button } from 'reactstrap';
 import axios from 'axios';
 import Recipe from './Recipe'
+import SavedRecipes from './SavedRecipes'
+
 import CreateRecipeForm from './CreateRecipeForm'
 
 import './App.css';
@@ -79,7 +81,7 @@ function App() {
     }
   };
 
-  const addRecipe = async (event) => {
+  const addRecipe = async (recipeText) => {
     const newRecipeInput = document.getElementById('newRecipe');
     const item = newRecipeInput.value;
     console.log(item);
@@ -87,6 +89,7 @@ function App() {
 
     const newRecipe = {
       "item": item,
+      "recipe": recipeText,
       "completed": false
     };
 
@@ -148,10 +151,10 @@ function App() {
   const askChat = async (q) => {
     
     //PRRUEBA
-    // const textPrueba = "recipeName: Fajitas de Pollo con Verduras y Yogur ingredients: pollo; fajitas; verduras (pueden ser pimiento, cebolla, tomate, etc.); yogur; sal; pimienta; ajo; pimenton; huevos (opcional) tools: sarten time: 15 minutos difficulty: fácil instructions: 1. Cortar el pollo y las verduras en tiras delgadas. 2. Sazonar el pollo con un poco de pimienta, ajo y pimentón. 3. Calentar la sartén a fuego medio y agregar una cucharada de aceite. 4. Agregar el pollo y saltear hasta que esté dorado, alrededor de 3 minutos. 5. Agregar las verduras y saltear a fuego medio-alto durante 5 minutos más, hasta que estén tiernas. 6. Calentar las fajitas en la sartén o en el microondas. 7. Agregar una cucharada grande de yogur en cada fajita y cubrir con la mezcla de pollo y verduras. 8. Para una opción adicional, puedes batir un huevo y agregarlo a la sartén después de las verduras para cocinarlo junto con la mezcla. 9. Servir de inmediato y disfrutar!"
+    const textPrueba = "[\n  {\n    \"recipeName\": \"Fajitas de pollo con verduras y yogur\",\n    \"difficulty\": \"Intermedio\",\n    \"preparationTime\": 15,\n    \"ingredients\": [\"pollo\", \"fajitas\", \"verduras\", \"yogur\", \"sal\", \"pimienta\", \"ajo\", \"pimenton\", \"huevos\"],\n    \"kitchenToolsUsed\": [\"sartén\"],\n    \"instructions\": [\n      \"1. Cortar el pollo y las verduras en tiras delgadas.\",\n      \"2. En un sartén caliente, agregar un poco de aceite y dorar el pollo por unos minutos. Agregar las verduras y cocinar por 5 minutos hasta que estén suaves.\",\n      \"3. Agregar sal, pimienta, ajo y pimentón al gusto.\",\n      \"4. Cocinar las fajitas siguiendo las instrucciones del paquete.\",\n      \"5. En un sartén aparte, batir los huevos hasta que estén espumosos. Agregar sal y pimienta al gusto. Cocinar en un sartén caliente hasta que estén firmes.\",\n      \"6. Servir las fajitas con el pollo y las verduras encima, añadir los huevos revueltos y un poco de yogur.\"\n    ]\n  }\n]"
 
-    // setRecipeText(textPrueba)
-    // return
+    setRecipeText(textPrueba)
+    return
     
     const question = {
       "question": q
@@ -176,7 +179,27 @@ function App() {
     }
   }
   
+  function parseRecipeText(text) {
+    // Divide el texto de la receta por saltos de línea para obtener cada línea por separado
+    const json = JSON.parse(text);
+    const objReceta = json[0]
+    const recipeName = objReceta.recipeName;
+    const ingredients = objReceta.ingredients;
+    const tools = objReceta.kitchenToolsUsed;
+    const time = objReceta.preparationTime;
+    const difficulty = objReceta.difficulty;
+    const instructions = objReceta.instructions;
   
+    // Devuelve un objeto con las variables de la receta
+    return {
+      recipeName,
+      ingredients,
+      tools,
+      time,
+      difficulty,
+      instructions,
+    };
+  }
   return (
     <div className="App">
       <Container>
@@ -206,8 +229,9 @@ function App() {
               {idToken.length > 0 || true ?
                 (
                   <div>
+                    <SavedRecipes recipes = { recipes } deleteRecipe = { deleteRecipe } completeRecipe = { completeRecipe } parseRecipeText={parseRecipeText}/>
                     <CreateRecipeForm askChat={askChat}/>
-                    {recipeText ? <Recipe recipeText = { recipeText } addRecipe = { addRecipe } recipes = { recipes } deleteRecipe = { deleteRecipe } completeRecipe = { completeRecipe }/> : null}
+                    {recipeText ? <Recipe recipeText = { recipeText } addRecipe = { addRecipe } recipes = { recipes } deleteRecipe = { deleteRecipe } completeRecipe = { completeRecipe } parseRecipeText={parseRecipeText} /> : null}
                   </div>
                 ) : (
                   <p>
