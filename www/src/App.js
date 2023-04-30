@@ -196,7 +196,7 @@ function App() {
         <Jumbotron>
           <Row>
             <Col md="12">
-              {idToken.length === 0 ?
+              {idToken.length > 0 || true ?
                 (
                   <div>
                     <CreateRecipeForm askChat={askChat}/>
