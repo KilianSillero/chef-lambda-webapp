@@ -209,7 +209,7 @@ function App() {
     }
     else if (result && result.status === 200) {
       console.log(result)
-      const recipe = JSON.stringify(result.data.body)
+      const recipe = result.data.body
       setRecipeText(recipe);
     }
   }
