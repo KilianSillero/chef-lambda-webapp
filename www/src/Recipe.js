@@ -7,7 +7,7 @@ import './Recipe.css';
 function Recipe({ recipeText, addRecipe, parseRecipeText }) {
 
   const [filter, setFilter] = useState('all');
-  const { recipeName, ingredients, tools, time, difficulty, instructions } = parseRecipeText(recipeText);
+  //const { recipeName, ingredients, tools, time, difficulty, instructions } = parseRecipeText(recipeText);
 
   const changeFilter = (newFilter) => {
     setFilter(newFilter);
@@ -25,7 +25,6 @@ function Recipe({ recipeText, addRecipe, parseRecipeText }) {
               type="text"
               name="recipe"
               id="newRecipe"
-              defaultValue={recipeName}
               placeholder="nombre de la receta"
               className="w-100"
             />
