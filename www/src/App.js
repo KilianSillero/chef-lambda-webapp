@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Container, Jumbotron, Row, Col, Alert, Button } from 'reactstrap';
+
 import axios from 'axios';
 import Recipe from './Recipe'
 import SavedRecipes from './SavedRecipes'
@@ -213,27 +214,27 @@ function App() {
     }
   }
 
-  function parseRecipeText(text) {
-    // Divide el texto de la receta por saltos de línea para obtener cada línea por separado
-    const json = JSON.parse(text.substring(1, text.length - 1));
-    const objReceta = json[0]
-    const recipeName = objReceta.recipeName;
-    const ingredients = objReceta.ingredients;
-    const tools = objReceta.kitchenToolsUsed;
-    const time = objReceta.preparationTime;
-    const difficulty = objReceta.difficulty;
-    const instructions = objReceta.instructions;
+  // function parseRecipeText(text) {
+  //   // Divide el texto de la receta por saltos de línea para obtener cada línea por separado
+  //   const json = JSON.parse(text.substring(1, text.length - 1));
+  //   const objReceta = json[0]
+  //   const recipeName = objReceta.recipeName;
+  //   const ingredients = objReceta.ingredients;
+  //   const tools = objReceta.kitchenToolsUsed;
+  //   const time = objReceta.preparationTime;
+  //   const difficulty = objReceta.difficulty;
+  //   const instructions = objReceta.instructions;
 
-    // Devuelve un objeto con las variables de la receta
-    return {
-      recipeName,
-      ingredients,
-      tools,
-      time,
-      difficulty,
-      instructions,
-    };
-  }
+  //   // Devuelve un objeto con las variables de la receta
+  //   return {
+  //     recipeName,
+  //     ingredients,
+  //     tools,
+  //     time,
+  //     difficulty,
+  //     instructions,
+  //   };
+  // }
   return (
     <Router>
       <div className="App">
@@ -284,7 +285,6 @@ function App() {
                             <Recipe
                               recipeText={recipeText}
                               addRecipe={addRecipe}
-                              parseRecipeText={parseRecipeText}
                             />
                           ) : null}
                         </div>
@@ -298,7 +298,6 @@ function App() {
                           recipes={recipes}
                           deleteRecipe={deleteRecipe}
                           completeRecipe={completeRecipe}
-                          parseRecipeText={parseRecipeText}
                         />
                       )}
                     />

@@ -16,7 +16,7 @@ function Recipe({ recipeText, addRecipe, parseRecipeText }) {
   return (
     <div className="Recipe">
       
-          <ShowRecipe recipeText={recipeText} parseRecipeText={parseRecipeText}/>
+          <ShowRecipe recipeText={recipeText}/>
           
           <h2>Si te ha gustado la receta guardala!</h2>
           <Form className="d-flex" inline>

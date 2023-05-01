@@ -28,7 +28,7 @@ function SavedRecipes({ recipes, deleteRecipe, completeRecipe, parseRecipeText }
       <Modal isOpen={modal} toggle={toggle} size="xl">
         <ModalHeader toggle={toggle}>Receta</ModalHeader>
         <ModalBody>
-           <ShowRecipe recipeText={recipeText} parseRecipeText={parseRecipeText}/>
+           <ShowRecipe recipeText={recipeText}/>
 
         </ModalBody>
       </Modal>
