@@ -70,7 +70,7 @@ function App() {
     });
 
     // Si la cookie existe, devolver el token
-    if (idToken) {
+    if (idToken.length > 0) {
       setIdToken(idToken);
       return idToken;
     }
@@ -208,7 +208,7 @@ function App() {
     }
     else if (result && result.status === 200) {
       console.log(result)
-      const recipe = JSON.stringify(result.data)
+      const recipe = JSON.stringify(result.data.body)
       setRecipeText(recipe);
     }
   }
@@ -272,7 +272,7 @@ function App() {
           <Jumbotron>
             <Row>
               <Col md="12">
-                {idToken.length > 0 || true ? (
+                {idToken.length > 0 ? (
                   <Switch>
                     <Route
                       exact
@@ -284,9 +284,6 @@ function App() {
                             <Recipe
                               recipeText={recipeText}
                               addRecipe={addRecipe}
-                              recipes={recipes}
-                              deleteRecipe={deleteRecipe}
-                              completeRecipe={completeRecipe}
                               parseRecipeText={parseRecipeText}
                             />
                           ) : null}
