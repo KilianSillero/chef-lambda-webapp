@@ -8,7 +8,7 @@ function ShowRecipe({ recipeText }) {
   //const { recipeName, ingredients, tools, time, difficulty, instructions } = parseRecipeText(recipeText);
 
   return (
-    <ReactMarkdown>{recipeText}</ReactMarkdown>
+    <ReactMarkdown children={recipeText}/>
     // <div className="Recipe">
       
     //   <h2>{recipeName}</h2>
