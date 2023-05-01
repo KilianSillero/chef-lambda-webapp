@@ -179,7 +179,7 @@ Resources:
           AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
 
       Events:
-        GetItem:
+        AskChat:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /gpt
@@ -214,31 +214,57 @@ Resources:
             Auth:
               Authorizer: CognitoAuthorizer
 
-  CompleteRecipeFunction:
-      Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-      Properties:
-        CodeUri: recipe-src/completeRecipe/
-        Handler: app.completeRecipeItem
-        Tracing: Active
-        Policies:
-          - DynamoDBCrudPolicy:
-              TableName: !Ref RecipeTable
-          - CloudWatchPutMetricPolicy: {}
-        Environment:
-          Variables:
-            TABLE_NAME: !Ref RecipeTable
-            AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
-            ENDPOINT_OVERRIDE: ""
+  FavRecipeFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: recipe-src/favRecipe/
+      Handler: app.favRecipeItem
+      Tracing: Active
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref RecipeTable
+        - CloudWatchPutMetricPolicy: {}
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref RecipeTable
+          AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
+          ENDPOINT_OVERRIDE: ""
 
-        Events:
-          CompleteItem:
-            Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-            Properties:
-              Path: /item/{id}/done
-              Method: post
-              RestApiId: !Ref RecipeApi
-              Auth:
-                Authorizer: CognitoAuthorizer
+      Events:
+        FavItem:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /item/{id}/fav
+            Method: post
+            RestApiId: !Ref RecipeApi
+            Auth:
+              Authorizer: CognitoAuthorizer
+
+  UnfavRecipeFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: recipe-src/unfavRecipe/
+      Handler: app.unfavRecipeItem
+      Tracing: Active
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref RecipeTable
+        - CloudWatchPutMetricPolicy: {}
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref RecipeTable
+          AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
+          ENDPOINT_OVERRIDE: ""
+
+      Events:
+        UnfavItem:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /item/{id}/unfav
+            Method: post
+            RestApiId: !Ref RecipeApi
+            Auth:
+              Authorizer: CognitoAuthorizer
 
   AddRecipeFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction

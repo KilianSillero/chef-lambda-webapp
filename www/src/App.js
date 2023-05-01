@@ -125,7 +125,7 @@ function App() {
     const newRecipe = {
       "item": item,
       "recipe": recipeText,
-      "completed": false
+      "favorite": false
     };
 
     const result = await axios({
@@ -167,12 +167,12 @@ function App() {
     }
   }
 
-  const completeRecipe = async (itemId) => {
+  const favRecipe = async (itemId) => {
     if (itemId === null) return;
 
     const result = await axios({
       method: 'POST',
-      url: `${config.api_base_url}/item/${itemId}/done`,
+      url: `${config.api_base_url}/item/${itemId}/fav`,
       headers: {
         Authorization: idToken
       }
@@ -249,7 +249,9 @@ function App() {
           <header>
             <Row>
               <Col md="8" className="logo">
-                <h1>Chef AI</h1>
+                <a href="/">
+                  <h1>Chef AI</h1>
+                </a>
                 <p>Infinitas recetas a tu alcance.</p>
               </Col>
               <Col md="4">
@@ -297,7 +299,7 @@ function App() {
                         <SavedRecipes
                           recipes={recipes}
                           deleteRecipe={deleteRecipe}
-                          completeRecipe={completeRecipe}
+                          favRecipe={favRecipe}
                         />
                       )}
                     />

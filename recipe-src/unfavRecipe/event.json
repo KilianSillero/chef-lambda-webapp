@@ -1,6 +1,6 @@
 {
-   "resource": "/item/{id}",
-   "path": "/item/1",
+   "resource": "done/item/{id}",
+   "path": "done/item/1",
    "httpMethod": "POST",
    "headers": {
        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
@@ -130,9 +130,6 @@
        "domainName": "bsdhc1dx2g.execute-api.us-east-1.amazonaws.com",
        "apiId": "bsdhc1dx2g"
    },
-   "body": {
-       "favorite":false,
-       "item": "buy even more milk"
-   },
+   "body": null,
    "isBase64Encoded": false
 }

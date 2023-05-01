@@ -29,17 +29,13 @@ const response = (statusCode, body, additionalHeaders) => ({
 });
 
 function isValidRequest(event) {
-  let isIdValid =
+  console.log("event in isValidRequest favorite recipe: " + JSON.stringify(event, null, 2));
+  return (
     event !== null &&
     event.pathParameters !== null &&
     event.pathParameters.id !== null &&
-    /^[\w-]+$/.test(event.pathParameters.id);
-
-  let body = event.body;
-  let isBodyValid =
-    body !== null && body.favorite !== null && body.item !== null;
-
-  return isIdValid && isBodyValid;
+    /^[\w-]+$/.test(event.pathParameters.id)
+  );
 }
 
 function getCognitoUsername(event) {
@@ -50,36 +46,24 @@ function getCognitoUsername(event) {
   return null;
 }
 
-function updateRecord(username, recordId, eventBody) {
-  let d = new Date();
-  const params = {
+function updateRecord(username, recordId) {
+  let params = {
     TableName: TABLE_NAME,
     Key: {
       "cognito-username": username,
       id: recordId,
     },
-    UpdateExpression: "set favorite = :c, lastupdate_date = :lud, #i = :i, recipe = :r",
-    ExpressionAttributeNames: {
-      // using ExpressionAttributeNames to show how to
-      // overcome reserved names, in this case <item>
-      "#i": "item",
-    },
-    ExpressionAttributeValues: {
-      ":c": eventBody.favorite,
-      ":lud": d.toISOString(),
-      ":i": eventBody.item,
-      ":r": eventBody.recipe,
-    },
-    ReturnValues: "ALL_NEW",
+    UpdateExpression: "set #field = :value",
+    ExpressionAttributeNames: { "#field": "favorite" },
+    ExpressionAttributeValues: { ":value": true },
   };
-
   return docClient.update(params);
 }
 
 // Lambda Handler
-exports.updateRecipeItem = metricScope((metrics) => async (event, context) => {
+exports.favRecipeItem = metricScope((metrics) => async (event, context) => {
   metrics.setNamespace("RecipeApp");
-  metrics.putDimensions({ Service: "updateRecipe" });
+  metrics.putDimensions({ Service: "favRecipe" });
   metrics.setProperty("RequestId", context.requestId);
 
   if (!isValidRequest(event)) {
@@ -89,10 +73,7 @@ exports.updateRecipeItem = metricScope((metrics) => async (event, context) => {
 
   try {
     let username = getCognitoUsername(event);
-    let data = await updateRecord(
-      event.pathParameters.id,
-      event.body
-    ).promise();
+    let data = await updateRecord(username, event.pathParameters.id).promise();
     metrics.putMetric("Success", 1, Unit.Count);
     return response(200, data);
   } catch (err) {

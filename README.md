@@ -24,7 +24,7 @@ When a user connects to the web site, the needed resources are downloaded to the
 
 ### Back End Application (Business Logic)
 
-The backend application is where the actual business logic is implemented. The code is implemented using Lambda functions fronted by an API Gateway REST API. In our case, we have different Lambda functions, each handling a different aspect of the application: list the to-do items, get details about a specific item, update an item, create a new item, mark an item as complete and delete an existing item. The application saves all items in a DynamoDB table.
+The backend application is where the actual business logic is implemented. The code is implemented using Lambda functions fronted by an API Gateway REST API. In our case, we have different Lambda functions, each handling a different aspect of the application: list the to-do items, get details about a specific item, update an item, create a new item, mark an item as favorite and delete an existing item. The application saves all items in a DynamoDB table.
 
 ### User Registration and Authentication
 
@@ -194,7 +194,7 @@ creates the following resources:
 
 * **GetAllRecipeFunction** - The Lambda function used to retrieve all the ToDo items
 
-* **CompleteRecipeFunction** - The Lambda function used to set the state of an item to complete
+* **FavRecipeFunction** - The Lambda function used to set the state of an item to favorite
 
 * **AddRecipeFunction** - The Lambda function used to create a new ToDo item
 

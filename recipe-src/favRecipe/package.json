@@ -1,5 +1,5 @@
 {
-  "name": "CompleteRecipe-item",
+  "name": "FavRecipe-item",
   "version": "1.0.0",
   "description": "Add a new Recipe item to the DynamoDB Table",
   "main": "src/app.js",

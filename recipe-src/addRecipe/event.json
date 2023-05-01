@@ -147,7 +147,7 @@
         "apiId": "bsdhc1dx2g"
     },
     "body": {
-        "completed": false,
+        "favorite": false,
         "item": "buy apples"
     },
     "isBase64Encoded": false

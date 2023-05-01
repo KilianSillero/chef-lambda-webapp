@@ -29,7 +29,7 @@ const response = (statusCode, body, additionalHeaders) => ({
 });
 
 function isValidRequest(event) {
-  console.log("event in isValidRequest complete recipe: " + JSON.stringify(event, null, 2));
+  console.log("event in isValidRequest favorite recipe: " + JSON.stringify(event, null, 2));
   return (
     event !== null &&
     event.pathParameters !== null &&
@@ -54,16 +54,16 @@ function updateRecord(username, recordId) {
       id: recordId,
     },
     UpdateExpression: "set #field = :value",
-    ExpressionAttributeNames: { "#field": "completed" },
-    ExpressionAttributeValues: { ":value": true },
+    ExpressionAttributeNames: { "#field": "favorite" },
+    ExpressionAttributeValues: { ":value": false },
   };
   return docClient.update(params);
 }
 
 // Lambda Handler
-exports.completeRecipeItem = metricScope((metrics) => async (event, context) => {
+exports.unfavRecipeItem = metricScope((metrics) => async (event, context) => {
   metrics.setNamespace("RecipeApp");
-  metrics.putDimensions({ Service: "completeRecipe" });
+  metrics.putDimensions({ Service: "unfavRecipe" });
   metrics.setProperty("RequestId", context.requestId);
 
   if (!isValidRequest(event)) {
