@@ -186,9 +186,9 @@ function App() {
 
     //PRRUEBA
     // const textPrueba = "[\n  {\n    \"recipeName\": \"Fajitas de pollo con verduras y yogur\",\n    \"difficulty\": \"Intermedio\",\n    \"preparationTime\": 15,\n    \"ingredients\": [\"pollo\", \"fajitas\", \"verduras\", \"yogur\", \"sal\", \"pimienta\", \"ajo\", \"pimenton\", \"huevos\"],\n    \"kitchenToolsUsed\": [\"sartén\"],\n    \"instructions\": [\n      \"1. Cortar el pollo y las verduras en tiras delgadas.\",\n      \"2. En un sartén caliente, agregar un poco de aceite y dorar el pollo por unos minutos. Agregar las verduras y cocinar por 5 minutos hasta que estén suaves.\",\n      \"3. Agregar sal, pimienta, ajo y pimentón al gusto.\",\n      \"4. Cocinar las fajitas siguiendo las instrucciones del paquete.\",\n      \"5. En un sartén aparte, batir los huevos hasta que estén espumosos. Agregar sal y pimienta al gusto. Cocinar en un sartén caliente hasta que estén firmes.\",\n      \"6. Servir las fajitas con el pollo y las verduras encima, añadir los huevos revueltos y un poco de yogur.\"\n    ]\n  }\n]"
-
-    // setRecipeText(textPrueba)
-    // return
+    const textPrueba = "\"[{\n    \"recipeName\": \"Ensalada de Yogur con Manzanas y Frutos Secos\",\n    \"difficulty\": \"Fácil\",\n    \"preparationTime\": 15,\n    \"ingredients\": [\"Yogur\", \"Manzanas\", \"Frutos Secos\"],\n    \"kitchenToolsUsed\": [\"Sartén\", \"Batidora\"],\n    \"instructions\": [\n        \"Cortar las manzanas en trozos pequeños y mezclar con el yogur en un tazón\",\n        \"Tostar los frutos secos en una sartén durante 1-2 minutos y agregar a la mezcla de yogur y manzana\",\n        \"Batir con la batidora hasta que los ingredientes estén bien mezclados\",\n        \"Servir en platos y disfrutar de una deliciosa ensalada dulce y cremosa\"\n    ]\n}]\""
+    setRecipeText(textPrueba)
+    return
 
     const question = {
       "question": q
@@ -215,7 +215,7 @@ function App() {
 
   function parseRecipeText(text) {
     // Divide el texto de la receta por saltos de línea para obtener cada línea por separado
-    const json = JSON.parse(text);
+    const json = JSON.parse(text.substring(1, text.length - 1));
     const objReceta = json[0]
     const recipeName = objReceta.recipeName;
     const ingredients = objReceta.ingredients;
@@ -272,7 +272,7 @@ function App() {
           <Jumbotron>
             <Row>
               <Col md="12">
-                {idToken.length > 0? (
+                {idToken.length > 0 ? (
                   <Switch>
                     <Route
                       exact
