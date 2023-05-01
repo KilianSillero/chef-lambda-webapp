@@ -70,7 +70,7 @@ function App() {
     });
 
     // Si la cookie existe, devolver el token
-    if (idToken.length > 0) {
+    if (idToken?.length > 0) {
       setIdToken(idToken);
       return idToken;
     }
@@ -272,7 +272,7 @@ function App() {
           <Jumbotron>
             <Row>
               <Col md="12">
-                {idToken.length > 0 ? (
+                {idToken.length > 0? (
                   <Switch>
                     <Route
                       exact
