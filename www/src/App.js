@@ -27,7 +27,7 @@ function App() {
   useEffect(() => {
     getIdToken();
     if (idToken.length > 0) {
-      getAllRecipes();
+      //getAllRecipes();
     }
   }, [idToken]);
 
@@ -144,7 +144,7 @@ function App() {
       clearCredentials();
     }
     else if (result && result.status === 200) {
-      getAllRecipes();
+      //getAllRecipes();
       newRecipeInput.value = '';
     }
   }
@@ -184,7 +184,7 @@ function App() {
     });
 
     if (result && result.status === 200) {
-      getAllRecipes();
+      //getAllRecipes();
     }
   }
 
@@ -286,13 +286,14 @@ function App() {
                     <Route
                       exact
                       path="/saved-recipes"
-                      component={() => (
+                      component={() => {
+                        getAllRecipes();
                         <SavedRecipes
                           recipes={recipes}
                           deleteRecipe={deleteRecipe}
                           favRecipe={favRecipe}
                         />
-                      )}
+                      }}
                     />
                     <Route
                       exact
