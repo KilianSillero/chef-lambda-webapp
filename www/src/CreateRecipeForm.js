@@ -11,8 +11,9 @@ const CreateRecipeForm = ({askChat}) => {
   const [buttonDisable, setButtonDisable] = useState(false);
   const [ingredientes, setIngredientes] = useState('');
   const [tiempo, setTiempo] = useState(15);
-  const [utensilios, setUtensilios] = useState([]);
-  const [dificultades, setDificultad] = useState([]);
+  const [utensilios, setUtensilios] = useState(["sarten", "olla", "microondas"]);
+  //const [dificultades, setDificultad] = useState([]);
+  const [selectedDificultad, setSelectedDificultad] = useState("facil");
 
   const handleIngredientesChange = (event) => {
     setIngredientes(event.target.value);
@@ -34,14 +35,15 @@ const CreateRecipeForm = ({askChat}) => {
   };
 
   const handleDificultadChange = (event) => {
-    const dificultad = event.target.value;
-    const checked = event.target.checked;
+    // const dificultad = event.target.value;
+    // const checked = event.target.checked;
 
-    if (checked) {
-      setDificultad([...dificultades, dificultad]);
-    } else {
-      setDificultad(dificultades.filter((d) => d !== dificultad));
-    }
+    // if (checked) {
+    //   setDificultad([...dificultades, dificultad]);
+    // } else {
+    //   setDificultad(dificultades.filter((d) => d !== dificultad));
+    // }
+    setSelectedDificultad(event.target.value);
   };
   const handleSubmit = () => {
     if (buttonDisable) {
@@ -50,11 +52,11 @@ const CreateRecipeForm = ({askChat}) => {
     setButtonDisable(true);
     
     const utensiliosText = utensilios.join(', ');
-    const dificultadText = dificultades.join(', ');
+    //const dificultadText = dificultades.join(', ');
     const tiempoText = `${tiempo} minutos`;
 //Tarea: Crea una receta de comida siguiendo estrictamente estas reglas: 1- Ingredientes disponibles: Mantequilla, leche. 2- Herramientas de cocina disponibles: horno, microondas, licuadora, freidora de aire, estufa. 3- Tiempo de cocción: Menos de 15 minutos. 4- Dificultad de ejecución: Fácil. 5- Uso de ingredientes: Puedes usar CUALQUIER ingrediente disponible a tu discreción. NO USES NINGÚN INGREDIENTE QUE NO SEA PARA COCINAR. 6- Muestra las unidades utilizando tanto el sistema métrico como el imperial. Responde con key:value donde las keys seran: recipeName, ingredients, tools, time, difficulty, instructions
     //const texto = `Crea una receta con los siguientes ingredientes: ${ingredientes}. Puedes usar los siguientes utensilios: ${utensiliosText}. La dificultad debe ser ${dificultadText} y tardar en hacerse ${tiempoText}.`;
-    const texto = `Teniendo en cuenta lo siguiente: Ingredientes disponibles: ${ingredientes}. 2- Herramientas de cocina disponibles: ${utensiliosText}. 3- Tiempo disponible: ${tiempoText}. 4- Dificultad de la receta: ${dificultadText}.
+    const texto = `Teniendo en cuenta lo siguiente: Ingredientes disponibles: ${ingredientes}. 2- Herramientas de cocina disponibles: ${utensiliosText}. 3- Tiempo disponible: ${tiempoText}. 4- Dificultad de la receta: ${selectedDificultad}.
     Creame una receta, pero no uses ingredientes que no combinen bien entre ellos. Usa MARKDOWN al responder.`;
     console.log(texto);
     askChat(texto);
@@ -78,7 +80,7 @@ const CreateRecipeForm = ({askChat}) => {
         <SliderWithTooltip
           min={5}
           max={120}
-          step={10}
+          step={5}
           defaultValue={tiempo}
           onAfterChange={handleTiempoChange}
         />
@@ -107,6 +109,15 @@ const CreateRecipeForm = ({askChat}) => {
           />
           <CustomInput
             type="checkbox"
+            id="microondas"
+            label="Microondas"
+            value="microondas"
+            checked={utensilios.includes('microondas')}
+            onChange={handleUtensiliosChange}
+            inline
+          />
+          <CustomInput
+            type="checkbox"
             id="batidora"
             label="Batidora"
             value="batidora"
@@ -114,38 +125,46 @@ const CreateRecipeForm = ({askChat}) => {
             onChange={handleUtensiliosChange}
             inline
           />
+          <CustomInput
+            type="checkbox"
+            id="freidoraAire"
+            label="Freidora de aire"
+            value="freidora de aire"
+            checked={utensilios.includes('freidora de aire')}
+            onChange={handleUtensiliosChange}
+            inline
+          />
+          <CustomInput
+            type="checkbox"
+            id="horno"
+            label="Horno"
+            value="horno"
+            checked={utensilios.includes('horno')}
+            onChange={handleUtensiliosChange}
+            inline
+          />
+          <CustomInput
+            type="checkbox"
+            id="ollaPresion"
+            label="Olla a presión"
+            value="olla a presion"
+            checked={utensilios.includes('olla a presion')}
+            onChange={handleUtensiliosChange}
+            inline
+          />
+
         </div>
       </FormGroup>
       <FormGroup>
-        <Label>Dificultad</Label>
-        <div>
-          <CustomInput
-            type="checkbox"
-            id="facil"
-            label="Fácil"
-            value="facil"
-            checked={dificultades.includes('facil')}
-            onChange={handleDificultadChange}
-          />
-          <CustomInput
-            type="checkbox"
-            id="intermedio"
-            label="Intermedio"
-            value="intermedio"
-            checked={dificultades.includes('intermedio')}
-            onChange={handleDificultadChange}
-          />
-          <CustomInput
-            type="checkbox"
-            id="dificil"
-            label="Difícil"
-            value="dificil"
-            checked={dificultades.includes('dificil')}
-            onChange={handleDificultadChange}
-      />
-    </div>
-  </FormGroup>
-  <Button onClick={handleSubmit} disabled={buttonDisable}>{buttonDisable ? 'Creando receta...' : 'Crear receta'}</Button>
+        <Label for="dificultad">Dificultad</Label>
+        <Input type="select" name="dificultad" id="dificultad" value={selectedDificultad} onChange={handleDificultadChange}>
+          <option value="">Seleccione una opción</option>
+          <option value="facil">Fácil</option>
+          <option value="intermedio">Intermedio</option>
+          <option value="dificil">Difícil</option>
+        </Input>
+      </FormGroup>
+    <Button onClick={handleSubmit} disabled={buttonDisable}>{buttonDisable ? 'Creando receta...' : 'Crear receta'}</Button>
 </Form>
 );
 };

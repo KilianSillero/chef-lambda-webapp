@@ -7,6 +7,9 @@ import Recipe from './Recipe'
 import SavedRecipes from './SavedRecipes'
 
 import CreateRecipeForm from './CreateRecipeForm'
+import CreateMacroRecipeForm from './CreateMacroRecipeForm'
+
+
 
 import './App.css';
 
@@ -167,12 +170,14 @@ function App() {
     }
   }
 
-  const favRecipe = async (itemId) => {
+  const favRecipe = async (itemId, itemFavorite) => {
     if (itemId === null) return;
-
+    
+    const favOrUnfav = itemFavorite ? "unfav" : "fav"; 
+    
     const result = await axios({
       method: 'POST',
-      url: `${config.api_base_url}/item/${itemId}/fav`,
+      url: `${config.api_base_url}/item/${itemId}/${favOrUnfav}`,
       headers: {
         Authorization: idToken
       }
@@ -214,27 +219,6 @@ function App() {
     }
   }
 
-  // function parseRecipeText(text) {
-  //   // Divide el texto de la receta por saltos de línea para obtener cada línea por separado
-  //   const json = JSON.parse(text.substring(1, text.length - 1));
-  //   const objReceta = json[0]
-  //   const recipeName = objReceta.recipeName;
-  //   const ingredients = objReceta.ingredients;
-  //   const tools = objReceta.kitchenToolsUsed;
-  //   const time = objReceta.preparationTime;
-  //   const difficulty = objReceta.difficulty;
-  //   const instructions = objReceta.instructions;
-
-  //   // Devuelve un objeto con las variables de la receta
-  //   return {
-  //     recipeName,
-  //     ingredients,
-  //     tools,
-  //     time,
-  //     difficulty,
-  //     instructions,
-  //   };
-  // }
   return (
     <Router>
       <div className="App">
@@ -248,13 +232,13 @@ function App() {
           </Alert>
           <header>
             <Row>
-              <Col md="8" className="logo">
+              <Col md="4" className="logo">
                 <a href="/">
                   <h1>Chef AI</h1>
                 </a>
                 <p>Infinitas recetas a tu alcance.</p>
               </Col>
-              <Col md="4">
+              <Col md="8">
                 <Button
                   href={`https://${config.cognito_hosted_domain}/login?response_type=token&client_id=${config.aws_user_pools_web_client_id}&redirect_uri=${config.redirect_url}`}
                   color="info"
@@ -268,6 +252,13 @@ function App() {
                   className="mt-4 mr-2 float-right"
                 >
                   Mis Recetas
+                </Button>
+                <Button
+                  href="/macros"
+                  color="secondary"
+                  className="mt-4 mr-2 float-right"
+                >
+                  Macros
                 </Button>
               </Col>
             </Row>
@@ -301,6 +292,21 @@ function App() {
                           deleteRecipe={deleteRecipe}
                           favRecipe={favRecipe}
                         />
+                      )}
+                    />
+                    <Route
+                      exact
+                      path="/macros"
+                      component={() => (
+                        <div>
+                          <CreateMacroRecipeForm askChat={askChat} />
+                          {recipeText ? (
+                            <Recipe
+                              recipeText={recipeText}
+                              addRecipe={addRecipe}
+                            />
+                          ) : null}
+                        </div>
                       )}
                     />
                   </Switch>

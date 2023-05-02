@@ -54,7 +54,7 @@ function SavedRecipes({ recipes, deleteRecipe, favRecipe, parseRecipeText }) {
                     <Button data-index={index} data-item-id={item.id} onClick={(e) => deleteRecipe(index, item.id)} color="danger" size="sm" className="float-right recipeButton" title="Borrar Receta">
                       <span className="oi oi-delete"></span>
                     </Button>
-                    <Button data-index={index} data-item-id={item.id} onClick={(e) => favRecipe(item.id)} outline={!item.favorite} disabled={item.favorite} color="success" size="sm" className="float-right recipeButton" title="Favoritas">
+                    <Button data-index={index} data-item-id={item.id} onClick={(e) => favRecipe(item.id, item.favorite)} outline={!item.favorite} color="success" size="sm" className="float-right recipeButton" title="Favoritas">
                       <span className="oi oi-star"></span>
                     </Button>
                     <Button data-index={index} data-item-id={item.id} onClick={(e) => seeRecipe(item.recipe)} color="info" size="sm" className="float-right recipeButton" title="Ver receta">
