@@ -274,7 +274,7 @@ function App() {
           <Jumbotron>
             <Row>
               <Col md="12">
-                {idToken.length > 0 ? (
+                {idToken.length > 0 ||true? (
                   <Switch>
                     <Route
                       exact
@@ -294,7 +294,7 @@ function App() {
                     <Route
                       exact
                       path="/saved-recipes"
-                      component={() => {
+                      component={() => (
                         
                         <SavedRecipes
                           getAllRecipes={getAllRecipes}
@@ -302,7 +302,7 @@ function App() {
                           deleteRecipe={deleteRecipe}
                           favRecipe={favRecipe}
                         />
-                      }}
+                      )}
                     />
                     <Route
                       exact
