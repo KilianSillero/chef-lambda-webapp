@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Button, ButtonGroup, Form, FormGroup, Input, Label, Row, Col, Jumbotron, Modal , ModalHeader, ModalBody} from 'reactstrap';
 import ShowRecipe from './ShowRecipe'
 
@@ -22,9 +22,12 @@ function SavedRecipes({ getAllRecipes, recipes, deleteRecipe, favRecipe, parseRe
         serRecipeText(recipeText);
         toggle();
     };
+    const fetchRecipes = useCallback(() => {
+      getAllRecipes()
+    },[getAllRecipes])
     useEffect(() => {
-      getAllRecipes();
-    }, [getAllRecipes]);
+      fetchRecipes();
+    }, [fetchRecipes]);
 
     return (
         <div className="SavedRecipes">
