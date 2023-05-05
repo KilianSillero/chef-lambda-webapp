@@ -100,23 +100,25 @@ function App() {
 
 
   const getAllRecipes = async () => {
-    const result = await axios({
-      url: `${config.api_base_url}/item/`,
-      headers: {
-        Authorization: idToken
+    if (idToken.length > 0) {
+      const result = await axios({
+        url: `${config.api_base_url}/item/`,
+        headers: {
+          Authorization: idToken
+        }
+      }).catch(error => {
+        console.log(error);
+      });
+  
+      console.log(result);
+  
+      if (result && result.status === 401) {
+        clearCredentials();
       }
-    }).catch(error => {
-      console.log(error);
-    });
-
-    console.log(result);
-
-    if (result && result.status === 401) {
-      clearCredentials();
-    }
-    else if (result && result.status === 200) {
-      console.log(result.data.Items);
-      setRecipes(result.data.Items);
+      else if (result && result.status === 200) {
+        console.log(result.data.Items);
+        setRecipes(result.data.Items);
+      }
     }
   };
 
@@ -274,7 +276,7 @@ function App() {
           <Jumbotron>
             <Row>
               <Col md="12">
-                {idToken.length > 0 ||true? (
+                {idToken.length > 0 ? (
                   <Switch>
                     <Route
                       exact
@@ -296,7 +298,7 @@ function App() {
                       path="/saved-recipes"
                       component={() => (
                         <SavedRecipes
-                          getAllRecipes={getAllRecipes()}
+                          getAllRecipes={getAllRecipes}
                           recipes={recipes}
                           deleteRecipe={deleteRecipe}
                           favRecipe={favRecipe}
