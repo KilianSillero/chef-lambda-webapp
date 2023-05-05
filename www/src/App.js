@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {useLocation, BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Container, Jumbotron, Row, Col, Alert, Button } from 'reactstrap';
 
 import axios from 'axios';
@@ -24,13 +24,14 @@ function App() {
   const [idToken, setIdToken] = useState('');
   const [recipes, setRecipes] = useState([]);
   const [recipeText, setRecipeText] = useState('');
-
+  const location = useLocation();
+  
   useEffect(() => {
     getIdToken();
-    if (idToken.length > 0) {
-      //getAllRecipes();
+    if (idToken.length > 0 && location.pathname === "/saved-recipes") {
+      getAllRecipes();
     }
-  }, [idToken]);
+  }, [idToken, location]);
 
   axios.interceptors.response.use(response => {
     console.log('Response was received');

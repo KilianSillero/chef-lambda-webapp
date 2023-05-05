@@ -4,7 +4,7 @@ import ShowRecipe from './ShowRecipe'
 
 import './SavedRecipes.css';
 
-function SavedRecipes({ getAllRecipes, recipes, deleteRecipe, favRecipe, parseRecipeText }) {
+function SavedRecipes({ recipes, deleteRecipe, favRecipe, parseRecipeText }) {
 
 
     const [modal, setModal] = useState(false);
@@ -22,9 +22,6 @@ function SavedRecipes({ getAllRecipes, recipes, deleteRecipe, favRecipe, parseRe
         serRecipeText(recipeText);
         toggle();
     };
-    useEffect(() => {
-      getAllRecipes();
-    }, []);
 
     return (
         <div className="SavedRecipes">
