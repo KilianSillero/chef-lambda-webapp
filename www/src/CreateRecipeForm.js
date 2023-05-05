@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, FormGroup, Label, Input, CustomInput, Button } from 'reactstrap';
+import { Form, FormGroup, Label, Input, CustomInput, Button, Spinner } from 'reactstrap';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
@@ -12,7 +12,6 @@ const CreateRecipeForm = ({askChat}) => {
   const [ingredientes, setIngredientes] = useState('');
   const [tiempo, setTiempo] = useState(15);
   const [utensilios, setUtensilios] = useState(["sarten", "olla", "microondas"]);
-  //const [dificultades, setDificultad] = useState([]);
   const [selectedDificultad, setSelectedDificultad] = useState("facil");
 
   const handleIngredientesChange = (event) => {
@@ -35,14 +34,6 @@ const CreateRecipeForm = ({askChat}) => {
   };
 
   const handleDificultadChange = (event) => {
-    // const dificultad = event.target.value;
-    // const checked = event.target.checked;
-
-    // if (checked) {
-    //   setDificultad([...dificultades, dificultad]);
-    // } else {
-    //   setDificultad(dificultades.filter((d) => d !== dificultad));
-    // }
     setSelectedDificultad(event.target.value);
   };
   const handleSubmit = () => {
@@ -164,7 +155,16 @@ const CreateRecipeForm = ({askChat}) => {
           <option value="dificil">Difícil</option>
         </Input>
       </FormGroup>
-    <Button onClick={handleSubmit} disabled={buttonDisable}>{buttonDisable ? 'Creando receta...' : 'Crear receta'}</Button>
+    <Button onClick={handleSubmit} disabled={buttonDisable}>{buttonDisable ? 
+      <>
+      <Spinner size="sm">
+        Loading...
+      </Spinner>
+      <span>
+        {' '}Creando receta...
+      </span>
+      </>
+    : 'Crear receta'}</Button>
 </Form>
 );
 };

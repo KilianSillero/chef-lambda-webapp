@@ -8,6 +8,7 @@ import SavedRecipes from './SavedRecipes'
 
 import CreateRecipeForm from './CreateRecipeForm'
 import CreateMacroRecipeForm from './CreateMacroRecipeForm'
+import CreateStyleRecipeForm from './CreateStyleRecipeForm'
 
 
 
@@ -260,6 +261,13 @@ function App() {
                 >
                   Macros
                 </Button>
+                <Button
+                  href="/style"
+                  color="secondary"
+                  className="mt-4 mr-2 float-right"
+                >
+                  Estilo
+                </Button>
               </Col>
             </Row>
           </header>
@@ -301,6 +309,21 @@ function App() {
                       component={() => (
                         <div>
                           <CreateMacroRecipeForm askChat={askChat} />
+                          {recipeText ? (
+                            <Recipe
+                              recipeText={recipeText}
+                              addRecipe={addRecipe}
+                            />
+                          ) : null}
+                        </div>
+                      )}
+                    />
+                    <Route
+                      exact
+                      path="/style"
+                      component={() => (
+                        <div>
+                          <CreateStyleRecipeForm askChat={askChat} />
                           {recipeText ? (
                             <Recipe
                               recipeText={recipeText}

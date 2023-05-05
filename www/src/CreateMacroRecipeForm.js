@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, FormGroup, Label, Input, CustomInput, Button } from 'reactstrap';
+import { Form, FormGroup, Label, Input, CustomInput, Button, Spinner } from 'reactstrap';
 
 
 const CreateMacroRecipeForm = ({askChat}) => {
@@ -91,7 +91,16 @@ const CreateMacroRecipeForm = ({askChat}) => {
           <option value="vegetariana">Vegetariana</option>
         </Input>
       </FormGroup>
-    <Button onClick={handleSubmit} disabled={buttonDisable}>{buttonDisable ? 'Creando receta...' : 'Crear receta'}</Button>
+    <Button onClick={handleSubmit} disabled={buttonDisable}>{buttonDisable ? 
+      <>
+      <Spinner size="sm">
+        Loading...
+      </Spinner>
+      <span>
+        {' '}Creando receta...
+      </span>
+      </>
+    : 'Crear receta'}</Button>
 </Form>
 );
 };
