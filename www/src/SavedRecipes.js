@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button, ButtonGroup, Form, FormGroup, Input, Label, Row, Col, Jumbotron, Modal , ModalHeader, ModalBody} from 'reactstrap';
 import ShowRecipe from './ShowRecipe'
 
 import './SavedRecipes.css';
 
-function SavedRecipes({ getAllRecipes, recipes, deleteRecipe, favRecipe, parseRecipeText }) {
+function SavedRecipes({ recipes, deleteRecipe, favRecipe, parseRecipeText }) {
 
 
     const [modal, setModal] = useState(false);
@@ -22,9 +22,6 @@ function SavedRecipes({ getAllRecipes, recipes, deleteRecipe, favRecipe, parseRe
         serRecipeText(recipeText);
         toggle();
     };
-    useEffect(() => {
-      getAllRecipes();
-    }, []);
 
     return (
         <div className="SavedRecipes">

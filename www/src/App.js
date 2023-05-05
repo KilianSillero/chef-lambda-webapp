@@ -295,9 +295,8 @@ function App() {
                       exact
                       path="/saved-recipes"
                       component={() => (
-                        
                         <SavedRecipes
-                          getAllRecipes={getAllRecipes}
+                          getAllRecipes={getAllRecipes()}
                           recipes={recipes}
                           deleteRecipe={deleteRecipe}
                           favRecipe={favRecipe}
