@@ -393,7 +393,7 @@ Resources:
     Properties:
       Name: RecipeApp
       Repository: !Ref Repository
-      Description: Recipe example app
+      Description: Recipe app
       OauthToken: !Ref OauthToken
       BuildSpec: |-
         version: 0.1
@@ -412,6 +412,10 @@ Resources:
         - Key: Name
           Value: Recipe
       IAMServiceRole: !GetAtt AmplifyRole.Arn
+      CustomRules:
+        - Source: '</^[^.]+$|\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|woff2|ttf|map|json|webp)$)([^.]+$)/>'
+          Target: "/index.html"
+          Status: "200"
 
   AmplifyBranch:
     Type: AWS::Amplify::Branch

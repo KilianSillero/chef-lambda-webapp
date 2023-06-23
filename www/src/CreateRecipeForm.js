@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { Form, FormGroup, Label, Input, CustomInput, Button, Spinner } from 'reactstrap';
+import { useState } from 'react';
+
+import {Row, Col, Form, FormGroup, Label, Input, CustomInput, Button, Spinner, Badge } from 'reactstrap';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-
 const { createSliderWithTooltip } = Slider;
 const SliderWithTooltip = createSliderWithTooltip(Slider);
 
-const CreateRecipeForm = ({askChat}) => {
-  
+const CreateRecipeForm = ({ askChat }) => {
+
   const [buttonDisable, setButtonDisable] = useState(false);
   const [ingredientes, setIngredientes] = useState('');
   const [tiempo, setTiempo] = useState(15);
@@ -28,7 +28,8 @@ const CreateRecipeForm = ({askChat}) => {
 
     if (checked) {
       setUtensilios([...utensilios, utensilio]);
-    } else {
+    }
+    else {
       setUtensilios(utensilios.filter((u) => u !== utensilio));
     }
   };
@@ -38,13 +39,13 @@ const CreateRecipeForm = ({askChat}) => {
   };
   const handleSubmit = () => {
     if (buttonDisable) {
-        return;
+      return;
     }
     setButtonDisable(true);
-    
+
     const utensiliosText = utensilios.join(', ');
     const tiempoText = `${tiempo} minutos`;
-    const texto = `Teniendo en cuenta lo siguiente: Ingredientes disponibles: ${ingredientes}. 2- Herramientas de cocina disponibles: ${utensiliosText}. 3- Tiempo disponible: ${tiempoText}. 4- Dificultad de la receta: ${selectedDificultad}.
+    const texto = `Teniendo en cuenta lo siguiente: Ingredientes disponibles: ${ingredientes}. Herramientas de cocina disponibles: ${utensiliosText}. Tiempo disponible: ${tiempoText}. Dificultad de la receta: ${selectedDificultad}.
     Creame una receta, pero no uses ingredientes que no combinen bien entre ellos. Usa MARKDOWN al responder.`;
     console.log(texto);
     askChat(texto);
@@ -53,7 +54,12 @@ const CreateRecipeForm = ({askChat}) => {
   return (
     <Form>
       <FormGroup>
-        <Label for="ingredientes">Ingredientes</Label>
+        <Label for="ingredientes"><Badge
+          color="primary"
+          pill
+        >
+          1
+        </Badge>¿Qué Ingredientes tienes disponibles?</Label>
         <Input
           type="text"
           name="ingredientes"
@@ -64,7 +70,14 @@ const CreateRecipeForm = ({askChat}) => {
         />
       </FormGroup>
       <FormGroup>
-        <Label for="tiempo">Tiempo</Label>
+        <Label for="tiempo">
+          <Badge
+            color="primary"
+            pill
+          >
+            2
+          </Badge>
+          ¿Cuánto tiempo tienes?</Label>
         <SliderWithTooltip
           min={5}
           max={120}
@@ -72,98 +85,152 @@ const CreateRecipeForm = ({askChat}) => {
           defaultValue={tiempo}
           onAfterChange={handleTiempoChange}
         />
-        <p>Tiempo: {tiempo} minutos</p>
+        <p>{tiempo} minutos</p>
       </FormGroup>
       <FormGroup>
-        <Label>Utensilios</Label>
-        <div>
-          <CustomInput
-            type="checkbox"
-            id="sarten"
-            label="Sartén"
-            value="sarten"
-            checked={utensilios.includes('sarten')}
-            onChange={handleUtensiliosChange}
-            inline
-          />
-          <CustomInput
-            type="checkbox"
-            id="olla"
-            label="Olla"
-            value="olla"
-            checked={utensilios.includes('olla')}
-            onChange={handleUtensiliosChange}
-            inline
-          />
-          <CustomInput
-            type="checkbox"
-            id="microondas"
-            label="Microondas"
-            value="microondas"
-            checked={utensilios.includes('microondas')}
-            onChange={handleUtensiliosChange}
-            inline
-          />
-          <CustomInput
-            type="checkbox"
-            id="batidora"
-            label="Batidora"
-            value="batidora"
-            checked={utensilios.includes('batidora')}
-            onChange={handleUtensiliosChange}
-            inline
-          />
-          <CustomInput
-            type="checkbox"
-            id="freidoraAire"
-            label="Freidora de aire"
-            value="freidora de aire"
-            checked={utensilios.includes('freidora de aire')}
-            onChange={handleUtensiliosChange}
-            inline
-          />
-          <CustomInput
-            type="checkbox"
-            id="horno"
-            label="Horno"
-            value="horno"
-            checked={utensilios.includes('horno')}
-            onChange={handleUtensiliosChange}
-            inline
-          />
-          <CustomInput
-            type="checkbox"
-            id="ollaPresion"
-            label="Olla a presión"
-            value="olla a presion"
-            checked={utensilios.includes('olla a presion')}
-            onChange={handleUtensiliosChange}
-            inline
-          />
+        <Label><Badge
+          color="primary"
+          pill
+        >
+          3
+        </Badge>¿Que utensilios quieres utilizar?</Label>
+        
 
-        </div>
+<div>
+  <Row>
+    <Col>
+      <CustomInput
+        type="checkbox"
+        id="sarten"
+        label="Sartén"
+        value="sarten"
+        checked={utensilios.includes('sarten')}
+        onChange={handleUtensiliosChange}
+        inline
+      />
+    </Col>
+    <Col>
+      <CustomInput
+        type="checkbox"
+        id="olla"
+        label="Olla"
+        value="olla"
+        checked={utensilios.includes('olla')}
+        onChange={handleUtensiliosChange}
+        inline
+      />
+    </Col>
+    <Col>
+      <CustomInput
+        type="checkbox"
+        id="microondas"
+        label="Microondas"
+        value="microondas"
+        checked={utensilios.includes('microondas')}
+        onChange={handleUtensiliosChange}
+        inline
+      />
+    </Col>
+  </Row>
+  <Row>
+    <Col>
+      <CustomInput
+        type="checkbox"
+        id="batidora"
+        label="Batidora"
+        value="batidora"
+        checked={utensilios.includes('batidora')}
+        onChange={handleUtensiliosChange}
+        inline
+      />
+    </Col>
+    <Col>
+      <CustomInput
+        type="checkbox"
+        id="freidoraAire"
+        label="Freidora de aire"
+        value="freidora de aire"
+        checked={utensilios.includes('freidora de aire')}
+        onChange={handleUtensiliosChange}
+        inline
+      />
+    </Col>
+    <Col>
+      <CustomInput
+        type="checkbox"
+        id="horno"
+        label="Horno"
+        value="horno"
+        checked={utensilios.includes('horno')}
+        onChange={handleUtensiliosChange}
+        inline
+      />
+    </Col>
+  </Row>
+  <Row>
+    <Col>
+      <CustomInput
+        type="checkbox"
+        id="ollaPresion"
+        label="Olla a presión"
+        value="olla a presion"
+        checked={utensilios.includes('olla a presion')}
+        onChange={handleUtensiliosChange}
+        inline
+      />
+    </Col>
+    <Col>
+      <CustomInput
+        type="checkbox"
+        id="thermomix"
+        label="Thermomix"
+        value="thermomix"
+        checked={utensilios.includes('thermomix')}
+        onChange={handleUtensiliosChange}
+        inline
+      />
+    </Col>
+    <Col>
+      <CustomInput
+        type="checkbox"
+        id="tostadora"
+        label="Tostadora"
+        value="tostadora"
+        checked={utensilios.includes('tostadora')}
+        onChange={handleUtensiliosChange}
+        inline
+      />
+    </Col>
+  </Row>
+</div>
+
       </FormGroup>
       <FormGroup>
-        <Label for="dificultad">Dificultad</Label>
+        <Label for="dificultad"><Badge
+          color="primary"
+          pill
+        >
+          4
+        </Badge>¿Cómo de diestro eres en la cocina?</Label>
         <Input type="select" name="dificultad" id="dificultad" value={selectedDificultad} onChange={handleDificultadChange}>
-          <option value="">Seleccione una opción</option>
+          <option value="">Selecciona la dificultad</option>
           <option value="facil">Fácil</option>
           <option value="intermedio">Intermedio</option>
           <option value="dificil">Difícil</option>
         </Input>
       </FormGroup>
-    <Button onClick={handleSubmit} disabled={buttonDisable}>{buttonDisable ? 
-      <>
-      <Spinner size="sm">
-        Loading...
-      </Spinner>
-      <span>
-        {' '}Creando receta...
-      </span>
-      </>
-    : 'Crear receta'}</Button>
-</Form>
-);
+      <Button block className="btn-round" color="primary" onClick={handleSubmit} disabled={buttonDisable}>{buttonDisable ?
+        <>
+          <Spinner size="sm">
+            Loading...
+          </Spinner>
+          <span>
+            {' '}Creando receta...
+          </span>
+        </>
+        : 'Crear receta'}</Button>
+    </Form>
+  );
 };
 
 export default CreateRecipeForm;

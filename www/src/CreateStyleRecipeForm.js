@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Form, FormGroup, Label, Input, CustomInput, Button, Spinner } from 'reactstrap';
+import { useState } from 'react';
+import { Form, FormGroup, Label, Input, Button, Spinner, Badge } from 'reactstrap';
 
 
-const CreateMacroRecipeForm = ({askChat}) => {
-  
+const CreateMacroRecipeForm = ({ askChat }) => {
+
   const [buttonDisable, setButtonDisable] = useState(false);
 
   const [selectedRestriccion, setSelectedRestriccion] = useState('');
@@ -22,10 +22,10 @@ const CreateMacroRecipeForm = ({askChat}) => {
   };
   const handleSubmit = () => {
     if (buttonDisable) {
-        return;
+      return;
     }
     setButtonDisable(true);
-    
+
     const texto = `Creame una receta ${selectedRestriccion} para ${selectedTipo} estilo ${selectedEstilo}. Usa MARKDOWN al responder.`;
     console.log(texto);
     askChat(texto);
@@ -34,7 +34,12 @@ const CreateMacroRecipeForm = ({askChat}) => {
   return (
     <Form>
       <FormGroup>
-        <Label for="estilo">¿Qué tipo de comida te apetece hoy?</Label>
+        <Label for="estilo"><Badge
+          color="primary"
+          pill
+        >
+          1
+        </Badge>¿Qué tipo de comida te apetece hoy?</Label>
         <Input
           type="select"
           name="estilo"
@@ -54,7 +59,12 @@ const CreateMacroRecipeForm = ({askChat}) => {
         </Input>
       </FormGroup>
       <FormGroup>
-        <Label for="tipo">¿Para cuándo?</Label>
+        <Label for="tipo"><Badge
+          color="primary"
+          pill
+        >
+          2
+        </Badge>¿Para cuándo?</Label>
         <Input
           type="select"
           name="tipo"
@@ -70,7 +80,12 @@ const CreateMacroRecipeForm = ({askChat}) => {
         </Input>
       </FormGroup>
       <FormGroup>
-        <Label for="restriccion">Restricciones Alimenticias</Label>
+        <Label for="restriccion"><Badge
+          color="primary"
+          pill
+        >
+          3
+        </Badge>Restricciones Alimenticias</Label>
         <Input
           type="select"
           name="restriccion"
@@ -85,18 +100,18 @@ const CreateMacroRecipeForm = ({askChat}) => {
           <option value="vegetariana">Vegetariana</option>
         </Input>
       </FormGroup>
-    <Button onClick={handleSubmit} disabled={buttonDisable}>{buttonDisable ? 
-      <>
-      <Spinner size="sm">
-        Loading...
-      </Spinner>
-      <span>
-        {' '}Creando receta...
-      </span>
-      </>
-    : 'Crear receta'}</Button>
-</Form>
-);
+      <Button block className="btn-round" color="primary" onClick={handleSubmit} disabled={buttonDisable}>{buttonDisable ?
+        <>
+          <Spinner size="sm">
+            Loading...
+          </Spinner>
+          <span>
+            {' '}Creando receta...
+          </span>
+        </>
+        : 'Crear receta'}</Button>
+    </Form>
+  );
 };
 
 export default CreateMacroRecipeForm;

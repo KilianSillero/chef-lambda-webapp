@@ -1,6 +1,3 @@
-// Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: MIT-0
-
 // default imports
 const { Configuration, OpenAIApi } = require("openai");
 const AWSXRay = require("aws-xray-sdk-core");

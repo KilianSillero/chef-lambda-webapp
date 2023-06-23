@@ -1,38 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { Button, ButtonGroup, Form, FormGroup, Input, Label, Row, Col, Jumbotron, Modal , ModalHeader, ModalBody} from 'reactstrap';
+import { useState } from 'react';
+import { Button, ButtonGroup, Row, Col, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import ShowRecipe from './ShowRecipe'
-
-import './SavedRecipes.css';
 
 function SavedRecipes({ recipes, deleteRecipe, favRecipe, parseRecipeText }) {
 
 
-    const [modal, setModal] = useState(false);
-    const [recipeText, serRecipeText] = useState("");
-    const toggle = () => setModal(!modal);
+  const [modal, setModal] = useState(false);
+  const [recipeText, serRecipeText] = useState("");
+  const toggle = () => setModal(!modal);
 
 
-    const [filter, setFilter] = useState('all');
+  const [filter, setFilter] = useState('all');
 
-    const changeFilter = (newFilter) => {
-        setFilter(newFilter);
-    };
+  const changeFilter = (newFilter) => {
+    setFilter(newFilter);
+  };
 
-    const seeRecipe = (recipeText) => {
-        serRecipeText(recipeText);
-        toggle();
-    };
+  const seeRecipe = (recipeText) => {
+    serRecipeText(recipeText);
+    toggle();
+  };
 
-    return (
-        <div className="SavedRecipes">
+  return (
+    <div className="SavedRecipes">
       <Modal isOpen={modal} toggle={toggle} size="xl">
         <ModalHeader toggle={toggle}>Receta</ModalHeader>
         <ModalBody>
-           <ShowRecipe recipeText={recipeText}/>
+          <ShowRecipe recipeText={recipeText} />
 
         </ModalBody>
       </Modal>
-      
+
       <Row>
         <Col xs="12" className="mt-1 mb-1">
           <ButtonGroup>
@@ -40,7 +38,7 @@ function SavedRecipes({ recipes, deleteRecipe, favRecipe, parseRecipeText }) {
             <Button onClick={(e) => changeFilter('favorite')} color={(filter === 'favorite') ? 'primary' : 'secondary'}>Favoritas</Button>
           </ButtonGroup>
         </Col>
-        
+
         <Col xs="12" className="mt-1 mb-1">
           <ul className="list-group">
             {recipes.filter(item => ((filter === 'all') || (filter === 'favorite' && item.favorite))).map((item, index) => (
@@ -68,7 +66,7 @@ function SavedRecipes({ recipes, deleteRecipe, favRecipe, parseRecipeText }) {
         </Col>
       </Row>
     </div >
-    );
+  );
 }
 
 export default SavedRecipes;

@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { Button, ButtonGroup, Form, FormGroup, Input, Label, Row, Col, Jumbotron } from 'reactstrap';
+import { useState } from 'react';
+import { Button, Form, FormGroup, Input } from 'reactstrap';
 import ShowRecipe from './ShowRecipe'
 
-import './Recipe.css';
+function Recipe({ recipeText, addRecipe }) {
 
-function Recipe({ recipeText, addRecipe, parseRecipeText }) {
+const [buttonText, setButtonText] = useState("Guardar");
+const [buttonDisabled, setButtonDisabled] = useState(false);
 
-  const [filter, setFilter] = useState('all');
-  //const { recipeName, ingredients, tools, time, difficulty, instructions } = parseRecipeText(recipeText);
-
-  const changeFilter = (newFilter) => {
-    setFilter(newFilter);
-  };
+function addRecipeClick(recipeText) {
+  setButtonText("Guardado");
+  setButtonDisabled(true);
+  addRecipe(recipeText);
+}
 
   return (
     <div className="Recipe">
@@ -30,11 +30,12 @@ function Recipe({ recipeText, addRecipe, parseRecipeText }) {
             />
           </FormGroup>
           <Button
-            onClick={(e) => addRecipe(recipeText)}
+            onClick={(e) => addRecipeClick(recipeText)}
             color="primary"
             className="ml-1"
+            disabled={buttonDisabled}
           >
-            Guardar
+            {buttonText}
           </Button>
         </Form>
     </div >
