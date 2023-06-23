@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, ButtonGroup, Row, Col, Modal, ModalHeader, ModalBody } from 'reactstrap';
+import { Button, ButtonGroup, Row, Col, Modal, ModalHeader, ModalBody, ListGroup, ListGroupItem, ListGroupItemHeading } from 'reactstrap';
 import ShowRecipe from './ShowRecipe'
 
 function SavedRecipes({ recipes, deleteRecipe, favRecipe, parseRecipeText }) {
@@ -40,29 +40,30 @@ function SavedRecipes({ recipes, deleteRecipe, favRecipe, parseRecipeText }) {
         </Col>
 
         <Col xs="12" className="mt-1 mb-1">
-          <ul className="list-group">
+          <ListGroup>
             {recipes.filter(item => ((filter === 'all') || (filter === 'favorite' && item.favorite))).map((item, index) => (
 
-              <li className="list-group-item" key={item.id}>
+              <ListGroupItem key={item.id}>
                 <Row>
                   <Col xs="7" sm="8" className={item.favorite ? 'favorite' : ''}>
-                    {item.item}
+                  <ListGroupItemHeading>{item.item}</ListGroupItemHeading>
+                    
                   </Col>
                   <Col xs="5" sm="4">
-                    <Button data-index={index} data-item-id={item.id} onClick={(e) => deleteRecipe(index, item.id)} color="danger" size="sm" className="float-right recipeButton" title="Borrar Receta">
+                    <Button data-index={index} data-item-id={item.id} onClick={(e) => deleteRecipe(index, item.id)} color="danger" size="sm" className="float-right recipeButton  ml-1 btn-just-icon " title="Borrar Receta">
                       <span className="oi oi-delete"></span>
                     </Button>
-                    <Button data-index={index} data-item-id={item.id} onClick={(e) => favRecipe(item.id, item.favorite)} outline={!item.favorite} color="success" size="sm" className="float-right recipeButton" title="Favoritas">
+                    <Button data-index={index} data-item-id={item.id} onClick={(e) => favRecipe(item.id, item.favorite)} outline={!item.favorite} color="success" size="sm" className="float-right recipeButton  ml-1 btn-just-icon " title="Favoritas">
                       <span className="oi oi-star"></span>
                     </Button>
-                    <Button data-index={index} data-item-id={item.id} onClick={(e) => seeRecipe(item.recipe)} color="info" size="sm" className="float-right recipeButton" title="Ver receta">
+                    <Button data-index={index} data-item-id={item.id} onClick={(e) => seeRecipe(item.recipe)} color="info" size="sm" className="float-right recipeButton  ml-1 btn-just-icon " title="Ver receta">
                       <span className="oi oi-eye"></span>
                     </Button>
                   </Col>
                 </Row>
-              </li>
+              </ListGroupItem>
             ))}
-          </ul>
+          </ListGroup>
         </Col>
       </Row>
     </div >

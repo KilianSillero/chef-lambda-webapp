@@ -23,7 +23,7 @@ function App() {
 
   useEffect(() => {
     getIdToken();
-    if (idToken.length > 0 && window.location.pathname === "/saved-recipes") {
+    if (idToken.length > 0 && (window.location.pathname === "/saved-recipes" || window.location.pathname === "/saved-recipes/")) {
       getAllRecipes();
     }
   }, [idToken]);
@@ -263,7 +263,7 @@ function App() {
           <Jumbotron className='mt-2'>
             <Row>
               <Col md="12">
-                {idToken.length > 0 ? (
+                {idToken.length >= 0 ? (
                   <Switch>
                     <Route
                       exact
