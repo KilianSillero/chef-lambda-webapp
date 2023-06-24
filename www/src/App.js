@@ -263,7 +263,7 @@ function App() {
           <Jumbotron className='mt-2'>
             <Row>
               <Col md="12">
-                {idToken.length >= 0 ? (
+                {idToken.length > 0 ? (
                   <Switch>
                     <Route
                       exact
